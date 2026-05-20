@@ -28,7 +28,7 @@ flowchart TD
     D --> E["j = 0"]
     E --> F{"j < 3 ?"}
     F -- Yes --> G{"i==1 && j==1 ?"}
-    G -- Yes --> M([終了 (break outerLoop)])
+    G -- Yes --> M(["終了 (break outerLoop)"])
     G -- No --> H["print     j= + j"]
     H --> I["j++"]
     I --> F

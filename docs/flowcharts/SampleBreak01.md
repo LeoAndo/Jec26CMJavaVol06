@@ -24,7 +24,7 @@ flowchart TD
     A([開始]) --> B["i = 0"]
     B --> C{"true ?"}
     C -- Yes --> D{"i > 2 ?"}
-    D -- Yes --> H([終了 (break)])
+    D -- Yes --> H(["終了 (break)"])
     D -- No --> E["print i"]
     E --> F["i++"]
     F --> C

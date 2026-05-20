@@ -26,7 +26,7 @@ flowchart TD
     C -- Yes --> D["j = 1"]
     D --> E{"j <= 5 ?"}
     E -- Yes --> F{"i == 2 ?"}
-    F -- Yes --> K([終了 (break outerLoop)])
+    F -- Yes --> K(["終了 (break outerLoop)"])
     F -- No --> G["print i + : + j"]
     G --> H["j++"]
     H --> E

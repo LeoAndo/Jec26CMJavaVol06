@@ -25,7 +25,7 @@ flowchart TD
     B --> C{"true ?"}
     C -- Yes --> D["print i + 空白"]
     D --> E{"i == 3 ?"}
-    E -- Yes --> H([終了 (break)])
+    E -- Yes --> H(["終了 (break)"])
     E -- No --> F["i++"]
     F --> C
 ```

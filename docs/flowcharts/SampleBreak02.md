@@ -28,7 +28,7 @@ flowchart TD
     A([開始]) --> B["i = 2"]
     B --> C{"switch (i)"}
     C -- "case 1" --> D["print iは1です。"]
-    D --> H([終了 (break)])
+    D --> H(["終了 (break)"])
     C -- "case 2" --> E["print iは2です。"]
     E --> H
     C -- "default" --> F["print iは3です。"]
