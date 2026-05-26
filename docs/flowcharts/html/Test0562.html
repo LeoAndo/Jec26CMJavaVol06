@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0562 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0562.md">元の Markdown: Test0562.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0562 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0562.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: <code>||</code> の短絡評価と後置インクリメントの組み合わせ。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int i, j;
+for (i = 0, j = 0; i &lt; 3;) {
+    if (i++ == 2 || j++ == 2)
+        break;
+}
+System.out.println(i);
+System.out.println(j);</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i=0, j=0&quot;]
+    B --&gt; C{&quot;i &lt; 3 ?&quot;}
+    C -- No --&gt; Y[&quot;print i, j&quot;]
+    C -- Yes --&gt; D[&quot;評価 i++==2 (iを+1)&quot;]
+    D --&gt; E{&quot;true ?&quot;}
+    E -- Yes --&gt; F([break])
+    E -- No --&gt; G[&quot;評価 j++==2 (jを+1)&quot;]
+    G --&gt; H{&quot;true ?&quot;}
+    H -- Yes --&gt; F
+    H -- No --&gt; C
+    F --&gt; Y
+    Y --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>反復</th><th>開始 i</th><th>i&lt;3?</th><th>i++ の値</th><th>i++後</th><th>==2?</th><th>短絡で j 評価する?</th><th>j++ の値</th><th>j++後</th><th>動作</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>0</td><td>true</td><td>0</td><td>1</td><td>false</td><td>yes</td><td>0</td><td>1</td><td>0==2 false → 続行</td></tr>
+        <tr><td>2</td><td>1</td><td>true</td><td>1</td><td>2</td><td>false</td><td>yes</td><td>1</td><td>2</td><td>1==2 false → 続行</td></tr>
+        <tr><td>3</td><td>2</td><td>true</td><td>2</td><td>3</td><td>true</td><td>no（短絡で j 未評価）</td><td>-</td><td>2</td><td>break</td></tr>
+      </tbody>
+    </table>
+    <p>最終 i=3, j=2。</p>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>3
+2</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>||</code> は左辺が true なら右辺を評価しない（短絡評価）。</li>
+      <li>反復 3 で <code>i++ == 2</code> が true なので、<code>j++</code> は実行されず j は 2 のまま。</li>
+      <li>後置 <code>i++</code> は条件式の値としては「更新前」の値、変数自身は「更新後」になる。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

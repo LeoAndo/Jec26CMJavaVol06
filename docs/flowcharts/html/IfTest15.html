@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IfTest15 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../IfTest15.md">元の Markdown: IfTest15.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">IfTest15 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/IfTest15.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: <code>if-else if</code> 文の基本。else 節がなく、どちらにもマッチしないときは何もしない。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 0;
+if (x &gt; 0)
+    System.out.println(&quot;A&quot;);
+else if (x == 0)
+    System.out.println(&quot;B&quot;);
+System.out.println(&quot;C&quot;);</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 0&quot;]
+    B --&gt; C{&quot;x &gt; 0 ?&quot;}
+    C -- &quot;true&quot; --&gt; D[&quot;A を出力&quot;]
+    C -- &quot;false&quot; --&gt; E{&quot;x == 0 ?&quot;}
+    E -- &quot;true&quot; --&gt; F[&quot;B を出力&quot;]
+    E -- &quot;false&quot; --&gt; G[&quot;C を出力&quot;]
+    D --&gt; G
+    F --&gt; G
+    G --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>条件判定</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int x = 0</code></td><td>0</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>if (x &gt; 0)</code></td><td>0</td><td><code>0 &gt; 0</code> → false</td><td>-</td></tr>
+        <tr><td>3</td><td><code>else if (x == 0)</code></td><td>0</td><td><code>0 == 0</code> → true</td><td>-</td></tr>
+        <tr><td>4</td><td><code>System.out.println(&quot;B&quot;)</code></td><td>0</td><td>-</td><td>B</td></tr>
+        <tr><td>5</td><td><code>System.out.println(&quot;C&quot;)</code></td><td>0</td><td>-</td><td>C</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>B
+C</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>else if</code> で条件を順に判定できる。</li>
+      <li>else 節がない場合、すべての条件が false なら何も出力されない。</li>
+      <li>if 文の後にある通常の文（<code>C</code>）は分岐結果に関わらず常に実行される。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

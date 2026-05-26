@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleBreak01 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleBreak01.md">元の Markdown: SampleBreak01.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleBreak01 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/SampleBreak01.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: 無限 while ループ内で <code>break</code> を使って抜ける。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int i = 0;
+while (true) {
+    if (i &gt; 2) {
+        break;       // ループを抜ける
+    }
+    System.out.println(i);
+    i++;
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 0&quot;]
+    B --&gt; C{&quot;true ?&quot;}
+    C -- Yes --&gt; D{&quot;i &gt; 2 ?&quot;}
+    D -- Yes --&gt; H([&quot;終了 (break)&quot;])
+    D -- No --&gt; E[&quot;print i&quot;]
+    E --&gt; F[&quot;i++&quot;]
+    F --&gt; C</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>実行前 i</th><th>条件 i&gt;2</th><th>実行後 i</th><th>出力</th><th>コメント</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int i = 0;</code></td><td>-</td><td>-</td><td>0</td><td>（なし）</td><td></td></tr>
+        <tr><td>2</td><td><code>while(true)</code></td><td>0</td><td>-</td><td>0</td><td>（なし）</td><td>条件 true</td></tr>
+        <tr><td>3</td><td><code>if (i &gt; 2)</code></td><td>0</td><td>false</td><td>0</td><td>（なし）</td><td>break しない</td></tr>
+        <tr><td>4</td><td><code>println(i)</code></td><td>0</td><td>-</td><td>0</td><td><code>0</code></td><td></td></tr>
+        <tr><td>5</td><td><code>i++</code></td><td>0</td><td>-</td><td>1</td><td>（なし）</td><td></td></tr>
+        <tr><td>6</td><td><code>if (i &gt; 2)</code></td><td>1</td><td>false</td><td>1</td><td>（なし）</td><td>break しない</td></tr>
+        <tr><td>7</td><td><code>println(i)</code></td><td>1</td><td>-</td><td>1</td><td><code>1</code></td><td></td></tr>
+        <tr><td>8</td><td><code>i++</code></td><td>1</td><td>-</td><td>2</td><td>（なし）</td><td></td></tr>
+        <tr><td>9</td><td><code>if (i &gt; 2)</code></td><td>2</td><td>false</td><td>2</td><td>（なし）</td><td>break しない</td></tr>
+        <tr><td>10</td><td><code>println(i)</code></td><td>2</td><td>-</td><td>2</td><td><code>2</code></td><td></td></tr>
+        <tr><td>11</td><td><code>i++</code></td><td>2</td><td>-</td><td>3</td><td>（なし）</td><td></td></tr>
+        <tr><td>12</td><td><code>if (i &gt; 2)</code></td><td>3</td><td>true</td><td>3</td><td>（なし）</td><td><strong>break で抜ける</strong></td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>0
+1
+2</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>break</code> は最も内側のループを即座に抜ける。</li>
+      <li><code>while (true)</code> のような無限ループは、内部の <code>break</code> が事実上の終了条件になる。</li>
+      <li><code>i &gt; 2</code> の判定タイミングによっては、想定より 1 回多い／少ない出力になることがある点に注意。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

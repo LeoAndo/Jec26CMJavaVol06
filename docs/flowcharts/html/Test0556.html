@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0556 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0556.md">元の Markdown: Test0556.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0556 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0556.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: <code>do-while(true)</code> 内の <code>break</code> での脱出。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 0;
+do {
+    if (x == 0) {
+        x++;
+    } else {
+        break;
+    }
+} while (true);
+System.out.println(x);</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 0&quot;]
+    B --&gt; C{&quot;x == 0 ?&quot;}
+    C -- Yes --&gt; D[&quot;x++&quot;]
+    C -- No --&gt; E([break])
+    D --&gt; F{&quot;while(true)&quot;}
+    F --&gt; C
+    E --&gt; G[&quot;print x&quot;]
+    G --&gt; H([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>反復</th><th>開始 x</th><th>x==0?</th><th>動作</th><th>終了 x</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>0</td><td>yes</td><td>x++</td><td>1</td></tr>
+        <tr><td>2</td><td>1</td><td>no</td><td>break</td><td>1</td></tr>
+      </tbody>
+    </table>
+    <p>最後に <code>println(x)</code> → 出力 <code>1</code>。</p>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>1</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>do-while</code> は条件にかかわらず本体を 1 回は実行する。</li>
+      <li><code>while(true)</code> は無限ループだが、本体内の <code>break</code> で抜けられる。</li>
+      <li>出口を <code>break</code> に頼る場合は、必ず到達する条件があるか確認する。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

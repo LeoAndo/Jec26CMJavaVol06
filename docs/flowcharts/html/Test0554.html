@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0554 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0554.md">元の Markdown: Test0554.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0554 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0554.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: ラベルはループにしか使えない（<code>continue inner</code> がコンパイルエラー）。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 0, y = 0;
+outer: for (;;) {
+    x++;
+    inner: y++;          // ラベルは式文に付いているだけ
+    if ((x + y) % 3 == 0) break outer;
+    if ((x + y) % 5 == 0) continue outer;
+    if ((x + y) % 4 == 0) continue inner; // The label inner is missing
+    x++;
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x=0, y=0&quot;]
+    B --&gt; C[&quot;x++&quot;]
+    C --&gt; D[&quot;inner: y++ ※ラベルは式文に付与&quot;]
+    D --&gt; E{&quot;(x+y)%3 == 0 ?&quot;}
+    E -- Yes --&gt; Z([break outer → 終了])
+    E -- No --&gt; F{&quot;(x+y)%5 == 0 ?&quot;}
+    F -- Yes --&gt; C
+    F -- No --&gt; G{&quot;(x+y)%4 == 0 ?&quot;}
+    G -- Yes --&gt; H[&quot;continue inner ※コンパイルエラー: inner はループラベルでない&quot;]
+    G -- No --&gt; I[&quot;x++&quot;]
+    I --&gt; C</pre>
+    <h2 id="section-4">トレース表</h2>
+    <p><code>continue inner</code> がエラーになるためコンパイル不可。仮にその行を無視して論理だけ追うと:</p>
+    <table>
+      <thead>
+        <tr><th>反復</th><th>x++後</th><th>y++後</th><th>x+y</th><th>%3==0?</th><th>%5==0?</th><th>%4==0?</th><th>動作</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>1</td><td>1</td><td>2</td><td>no</td><td>no</td><td>no</td><td>x++ → x=2</td></tr>
+        <tr><td>2</td><td>3</td><td>2</td><td>5</td><td>no</td><td>yes</td><td>-</td><td>continue outer</td></tr>
+        <tr><td>3</td><td>4</td><td>3</td><td>7</td><td>no</td><td>no</td><td>no</td><td>x++ → x=5</td></tr>
+        <tr><td>4</td><td>6</td><td>4</td><td>10</td><td>no</td><td>yes</td><td>-</td><td>continue outer</td></tr>
+        <tr><td>5</td><td>7</td><td>5</td><td>12</td><td>yes</td><td>-</td><td>-</td><td>break outer</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>（コンパイルエラーのため実行不可）</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>Java の <code>continue</code>/<code>break</code> のラベルは <strong>ループ文</strong> (<code>for</code>, <code>while</code>, <code>do-while</code>) にしか機能しない。</li>
+      <li><code>inner: y++;</code> のように単独の文にラベルを付けても、そのラベルへ <code>continue</code> はできない（「The label inner is missing」というエラー）。</li>
+      <li>ラベルは「ループ全体に対する目印」と覚える。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

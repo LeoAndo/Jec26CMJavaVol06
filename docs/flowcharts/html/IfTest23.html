@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IfTest23 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../IfTest23.md">元の Markdown: IfTest23.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">IfTest23 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/IfTest23.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: if-else の両方で <code>y</code> に代入すれば、if の外で <code>y</code> を使ってもコンパイルエラーにならない。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 10;
+int y;
+if (x &gt; 0) {
+    y = 7;
+} else {
+    y = -7;
+}
+System.out.println(y);</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 10&quot;]
+    B --&gt; C[&quot;y を宣言（未初期化）&quot;]
+    C --&gt; D{&quot;x &gt; 0 ?&quot;}
+    D -- &quot;true&quot; --&gt; E[&quot;y = 7&quot;]
+    D -- &quot;false&quot; --&gt; F[&quot;y = -7&quot;]
+    E --&gt; G[&quot;y を出力&quot;]
+    F --&gt; G
+    G --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>y</th><th>条件判定</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int x = 10</code></td><td>10</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>int y;</code></td><td>10</td><td>未初期化</td><td>-</td><td>-</td></tr>
+        <tr><td>3</td><td><code>if (x &gt; 0)</code></td><td>10</td><td>未初期化</td><td><code>10 &gt; 0</code> → true</td><td>-</td></tr>
+        <tr><td>4</td><td><code>y = 7</code></td><td>10</td><td>7</td><td>-</td><td>-</td></tr>
+        <tr><td>5</td><td><code>System.out.println(y)</code></td><td>10</td><td>7</td><td>-</td><td>7</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>7</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>if と else の両方の経路で <code>y</code> に代入しているため、if の外側でも <code>y</code> は確実に初期化済みとみなされる。</li>
+      <li>「すべての経路で必ず代入される」とコンパイラが判断できれば、<code>int y;</code> の宣言だけでも利用可能。</li>
+      <li>確定的代入のルールを理解すると、未初期化エラーへの対処方法がわかる。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0534 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0534.md">元の Markdown: Test0534.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0534 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0534.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: while と if を組み合わせ、0〜10 の偶数だけを出力する。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int i = 0;
+while (i &lt;= 10) {
+    if (i % 2 == 0)
+        System.out.print(i + &quot; &quot;);
+    i++;
+}</code></pre>
+    <ul>
+      <li>0 から 10 までのすべての値を順に判定し、偶数のときだけ出力する。</li>
+    </ul>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 0&quot;]
+    B --&gt; C{&quot;i &lt;= 10 ?&quot;}
+    C -- true --&gt; D{&quot;i % 2 == 0 ?&quot;}
+    D -- true --&gt; E[&quot;print i + ' '&quot;]
+    D -- false --&gt; F[&quot;i++&quot;]
+    E --&gt; F
+    F --&gt; C
+    C -- false --&gt; G([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>周回</th><th>i</th><th><code>i &lt;= 10</code></th><th><code>i % 2 == 0</code></th><th>出力</th><th>i++ 後</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>0</td><td>true</td><td>true</td><td><code>0 </code></td><td>1</td></tr>
+        <tr><td>2</td><td>1</td><td>true</td><td>false</td><td>（なし）</td><td>2</td></tr>
+        <tr><td>3</td><td>2</td><td>true</td><td>true</td><td><code>2 </code></td><td>3</td></tr>
+        <tr><td>4</td><td>3</td><td>true</td><td>false</td><td>（なし）</td><td>4</td></tr>
+        <tr><td>5</td><td>4</td><td>true</td><td>true</td><td><code>4 </code></td><td>5</td></tr>
+        <tr><td>6</td><td>5</td><td>true</td><td>false</td><td>（なし）</td><td>6</td></tr>
+        <tr><td>7</td><td>6</td><td>true</td><td>true</td><td><code>6 </code></td><td>7</td></tr>
+        <tr><td>8</td><td>7</td><td>true</td><td>false</td><td>（なし）</td><td>8</td></tr>
+        <tr><td>9</td><td>8</td><td>true</td><td>true</td><td><code>8 </code></td><td>9</td></tr>
+        <tr><td>10</td><td>9</td><td>true</td><td>false</td><td>（なし）</td><td>10</td></tr>
+        <tr><td>11</td><td>10</td><td>true</td><td>true</td><td><code>10 </code></td><td>11</td></tr>
+        <tr><td>12</td><td>11</td><td>false</td><td>-</td><td>-</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>0 2 4 6 8 10 </code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>ループ内に if を組み合わせることで「条件を満たすものだけ処理する」典型パターンになる。</li>
+      <li><code>i % 2 == 0</code> は偶数判定。奇数は <code>i % 2 != 0</code> や <code>i % 2 == 1</code>。</li>
+      <li>0 も偶数として扱われる。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

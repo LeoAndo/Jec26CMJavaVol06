@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ColorEnum2 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../ColorEnum2.md">元の Markdown: ColorEnum2.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">ColorEnum2 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/ColorEnum2.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: 値（フィールド）を持つ enum のサンプル。各定数にコンストラクタで数値を割り当てる。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">public enum ColorEnum2 {
+    RED(100), BLUE(200), GREEN(300);
+
+    private int num;
+
+    private ColorEnum2(int num) {
+        this.num = num;
+    }
+
+    public int getNum() {
+        return this.num;
+    }
+}</code></pre>
+    <p>このファイルは <code>main</code> を持たず、enum 定義のみ。<code>SampleSwitchWithEnum.testColorEnum2()</code> から利用される。</p>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;enum ColorEnum2 を宣言&quot;]
+    B --&gt; C[&quot;RED(100) を生成 → コンストラクタで num=100&quot;]
+    C --&gt; D[&quot;BLUE(200) を生成 → コンストラクタで num=200&quot;]
+    D --&gt; E[&quot;GREEN(300) を生成 → コンストラクタで num=300&quot;]
+    E --&gt; F[&quot;getNum() メソッドで num を取得可能&quot;]
+    F --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>生成された定数</th><th>num の値</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>RED(100)</code></td><td>RED</td><td>100</td></tr>
+        <tr><td>2</td><td><code>BLUE(200)</code></td><td>BLUE</td><td>200</td></tr>
+        <tr><td>3</td><td><code>GREEN(300)</code></td><td>GREEN</td><td>300</td></tr>
+        <tr><td>4</td><td><code>ColorEnum2.BLUE.getNum()</code></td><td>-</td><td>200 を返す</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <p><code>main</code> メソッドを持たないため、このファイル単体での実行結果はない。 利用例（<code>SampleSwitchWithEnum.testColorEnum2()</code>）:</p>
+    <pre><code>BLUE: num 200</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>enum はフィールド・コンストラクタ・メソッドを持つことができる。</li>
+      <li>enum のコンストラクタは <code>private</code>（暗黙的に private）で、<code>RED(100)</code> のように定数定義時に呼び出される。</li>
+      <li><code>getNum()</code> のようなインスタンスメソッドで保持した値を取得できる。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

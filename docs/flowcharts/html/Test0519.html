@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0519 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0519.md">元の Markdown: Test0519.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0519 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/Test0519.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: <code>byte</code> 型の値域（-128〜127）を超える <code>case</code> ラベルはコンパイルエラーになる。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">byte b = 0;
+switch (b) {
+    case -128:
+        System.out.print(&quot;A&quot;);
+        break;
+    case 0:
+        System.out.print(&quot;B&quot;);
+        break;
+    case 128: // Type mismatch: cannot convert from int to byte
+        System.out.print(&quot;C&quot;);
+        break;
+    default:
+        System.out.print(&quot;D&quot;);
+        break;
+}</code></pre>
+    <h2 id="section-3">フローチャート（コンパイル成功した想定の論理フロー）</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;b = 0&quot;]
+    B --&gt; C{&quot;b の値&quot;}
+    C -- &quot;-128&quot; --&gt; D[&quot;A を出力&quot;]
+    C -- &quot;0&quot; --&gt; E[&quot;B を出力&quot;]
+    C -- &quot;128 (型エラー)&quot; --&gt; F[&quot;C を出力 (到達不可)&quot;]
+    C -- &quot;default&quot; --&gt; G[&quot;D を出力&quot;]
+    D --&gt; Z([終了])
+    E --&gt; Z
+    F --&gt; Z
+    G --&gt; Z</pre>
+    <h2 id="section-4">トレース表（<code>case 128</code> を除いた想定で）</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>b</th><th>マッチした case</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>byte b = 0</code></td><td>0</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>switch (b)</code></td><td>0</td><td>case 0 にジャンプ</td><td>-</td></tr>
+        <tr><td>3</td><td><code>case 0: print(&quot;B&quot;)</code></td><td>0</td><td>0</td><td>B</td></tr>
+        <tr><td>4</td><td><code>break</code></td><td>0</td><td>-</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <p>このコードはコンパイルエラーになる:</p>
+    <pre><code>Type mismatch: cannot convert from int to byte</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>このファイルは<strong>コンパイルエラーを含む</strong>学習用サンプル。</li>
+      <li><code>byte</code> の値域は -128〜127。128 はその範囲外なので case ラベルに使えない。</li>
+      <li>switch の式の型と case ラベルの値が互換性を持つ必要がある。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

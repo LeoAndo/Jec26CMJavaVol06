@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleSwitchBreak01_ — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleSwitchBreak01_.md">元の Markdown: SampleSwitchBreak01_.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleSwitchBreak01_ — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/SampleSwitchBreak01_.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: Scanner で入力された値を switch で判定し、<code>break</code> の有無で動作がどう変わるかを確認する。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">Scanner sc = new Scanner(System.in);
+int x = sc.nextInt(); // キーボード入力した値をxに代入.
+switch (x) {
+    case 1:
+        System.out.println(&quot;One&quot;);
+        break;
+    case 2:
+        System.out.println(&quot;Two&quot;);
+    case 3:
+        System.out.println(&quot;Three&quot;);
+}
+sc.close();</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;Scanner sc = new Scanner(System.in)&quot;]
+    B --&gt; C[&quot;x = sc.nextInt()&quot;]
+    C --&gt; D{&quot;x の値&quot;}
+    D -- &quot;1&quot; --&gt; E[&quot;One を出力&quot;]
+    E --&gt; F[break]
+    D -- &quot;2&quot; --&gt; G[&quot;Two を出力&quot;]
+    D -- &quot;3&quot; --&gt; H[&quot;Three を出力&quot;]
+    G --&gt; H
+    F --&gt; I[&quot;sc.close()&quot;]
+    H --&gt; I
+    I --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <p>入力例: <code>2</code></p>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>マッチした case</th><th>入力</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>Scanner sc = new Scanner(System.in)</code></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>int x = sc.nextInt()</code></td><td>2</td><td>-</td><td>2</td><td>-</td></tr>
+        <tr><td>3</td><td><code>switch (x)</code></td><td>2</td><td>case 2 にジャンプ</td><td>-</td><td>-</td></tr>
+        <tr><td>4</td><td><code>case 2: System.out.println(&quot;Two&quot;)</code></td><td>2</td><td>2</td><td>-</td><td>Two</td></tr>
+        <tr><td>5</td><td>(break なし → fall through)</td><td>2</td><td>3</td><td>-</td><td>-</td></tr>
+        <tr><td>6</td><td><code>case 3: System.out.println(&quot;Three&quot;)</code></td><td>2</td><td>3</td><td>-</td><td>Three</td></tr>
+        <tr><td>7</td><td><code>sc.close()</code></td><td>2</td><td>-</td><td>-</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <p>入力例: <code>2</code></p>
+    <pre><code>Two
+Three</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>case 1</code> には <code>break</code> があるので <code>One</code> のみで終わる。</li>
+      <li><code>case 2</code> には <code>break</code> がないので、<code>case 3</code> まで fall-through する。</li>
+      <li>Scanner で動的に入力された値で switch を試せるサンプル。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

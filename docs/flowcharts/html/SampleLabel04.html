@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleLabel04 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleLabel04.md">元の Markdown: SampleLabel04.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleLabel04 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/SampleLabel04.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: ラベル付き <code>continue outerLoop;</code> （外側ループの先頭で出力するパターン）。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">outerLoop: for (int i = 0; i &lt; 3; i++) {
+    System.out.println(&quot;i = &quot; + i);
+    for (int j = 0; j &lt; 3; j++) {
+        if (i == 1 &amp;&amp; j == 1) {
+            continue outerLoop;
+        }
+        System.out.println(&quot;    j = &quot; + j);
+    }
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 0 (outerLoop)&quot;]
+    B --&gt; C{&quot;i &lt; 3 ?&quot;}
+    C -- Yes --&gt; D[&quot;print i = + i&quot;]
+    D --&gt; E[&quot;j = 0&quot;]
+    E --&gt; F{&quot;j &lt; 3 ?&quot;}
+    F -- Yes --&gt; G{&quot;i==1 &amp;&amp; j==1 ?&quot;}
+    G -- Yes --&gt; K[&quot;continue outerLoop → i++&quot;]
+    G -- No --&gt; H[&quot;print     j = + j&quot;]
+    H --&gt; I[&quot;j++&quot;]
+    I --&gt; F
+    F -- No --&gt; J[&quot;i++&quot;]
+    K --&gt; J
+    J --&gt; C
+    C -- No --&gt; L([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>外側 i</th><th>内側 j</th><th>条件 i==1 &amp;&amp; j==1</th><th>出力</th><th>コメント</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>0</td><td>-</td><td>-</td><td><code>i = 0</code></td><td></td></tr>
+        <tr><td>2</td><td>0</td><td>0</td><td>false</td><td><code>    j = 0</code></td><td></td></tr>
+        <tr><td>3</td><td>0</td><td>1</td><td>false</td><td><code>    j = 1</code></td><td></td></tr>
+        <tr><td>4</td><td>0</td><td>2</td><td>false</td><td><code>    j = 2</code></td><td></td></tr>
+        <tr><td>5</td><td>0</td><td>3</td><td>-</td><td>（なし）</td><td>内側 false → i++</td></tr>
+        <tr><td>6</td><td>1</td><td>-</td><td>-</td><td><code>i = 1</code></td><td></td></tr>
+        <tr><td>7</td><td>1</td><td>0</td><td>false</td><td><code>    j = 0</code></td><td></td></tr>
+        <tr><td>8</td><td>1</td><td>1</td><td>true</td><td>（なし）</td><td><strong>label で外側の次の i へ</strong></td></tr>
+        <tr><td>9</td><td>2</td><td>-</td><td>-</td><td><code>i = 2</code></td><td></td></tr>
+        <tr><td>10</td><td>2</td><td>0</td><td>false</td><td><code>    j = 0</code></td><td></td></tr>
+        <tr><td>11</td><td>2</td><td>1</td><td>false</td><td><code>    j = 1</code></td><td></td></tr>
+        <tr><td>12</td><td>2</td><td>2</td><td>false</td><td><code>    j = 2</code></td><td></td></tr>
+        <tr><td>13</td><td>2</td><td>3</td><td>-</td><td>（なし）</td><td>内側 false → i++</td></tr>
+        <tr><td>14</td><td>i=3</td><td>-</td><td>-</td><td>（なし）</td><td>外側 false で終了</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>i = 0
+    j = 0
+    j = 1
+    j = 2
+i = 1
+    j = 0
+i = 2
+    j = 0
+    j = 1
+    j = 2</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>continue outerLoop;</code> は外側ループの <strong>次の反復に進む</strong>（外側自体を終わらせない）。</li>
+      <li><code>break outerLoop;</code>（SampleLabel02）と比較すると、後者は完全終了するのに対し前者は次の i に進む。</li>
+      <li><code>i = 1</code> のとき <code>j = 1</code> で内側を中断し、<code>i = 2</code> の反復に進んでいる点に注目。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

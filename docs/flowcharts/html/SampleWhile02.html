@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleWhile02 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleWhile02.md">元の Markdown: SampleWhile02.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleWhile02 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/SampleWhile02.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: <code>while (true)</code> による無限ループの例。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int i = 1;
+while (true) { // 無限ループ
+    System.out.println(i + &quot;回目&quot;);
+    i++;
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 1&quot;]
+    B --&gt; C{&quot;true ?&quot;}
+    C -- Yes --&gt; D[&quot;print i + 回目&quot;]
+    D --&gt; E[&quot;i++&quot;]
+    E --&gt; C
+    C -. No (到達不能) .-&gt; F([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>実行前 i</th><th>条件 true</th><th>実行後 i</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int i = 1;</code></td><td>-</td><td>-</td><td>1</td><td>（なし）</td></tr>
+        <tr><td>2</td><td>条件判定</td><td>1</td><td>true</td><td>1</td><td>（なし）</td></tr>
+        <tr><td>3</td><td><code>println(i + &quot;回目&quot;)</code></td><td>1</td><td>-</td><td>1</td><td><code>1回目</code></td></tr>
+        <tr><td>4</td><td><code>i++</code></td><td>1</td><td>-</td><td>2</td><td>（なし）</td></tr>
+        <tr><td>5</td><td>条件判定</td><td>2</td><td>true</td><td>2</td><td>（なし）</td></tr>
+        <tr><td>6</td><td><code>println(i + &quot;回目&quot;)</code></td><td>2</td><td>-</td><td>2</td><td><code>2回目</code></td></tr>
+        <tr><td>7</td><td><code>i++</code></td><td>2</td><td>-</td><td>3</td><td>（なし）</td></tr>
+        <tr><td>8</td><td>条件判定</td><td>3</td><td>true</td><td>3</td><td>（なし）</td></tr>
+        <tr><td>9</td><td><code>println(i + &quot;回目&quot;)</code></td><td>3</td><td>-</td><td>3</td><td><code>3回目</code></td></tr>
+        <tr><td>10</td><td><code>i++</code></td><td>3</td><td>-</td><td>4</td><td>（なし）</td></tr>
+        <tr><td>...</td><td>...（永遠に継続）</td><td>...</td><td>true</td><td>...</td><td><code>4回目</code>, <code>5回目</code>, ...</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>1回目
+2回目
+3回目
+4回目
+5回目
+...（無限に続く。Ctrl+C で強制終了する必要がある）</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>条件式に <code>true</code> を直接書くと無限ループになる。</li>
+      <li>無限ループは <code>break</code> 文や強制終了で抜ける必要がある。</li>
+      <li>実用では入力監視ループなどに使うが、必ず抜ける条件を入れること。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

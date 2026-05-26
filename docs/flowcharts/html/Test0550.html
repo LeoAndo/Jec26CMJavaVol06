@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0550 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0550.md">元の Markdown: Test0550.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0550 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0550.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: ループ内で毎回変数を初期化すると無限ループになる例。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">while (true) {
+    int a = 0;
+    System.out.println(a++);
+    if (a == 5)
+        break;
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;while(true)&quot;]
+    B --&gt; C[&quot;int a = 0&quot;]
+    C --&gt; D[&quot;print a; a++&quot;]
+    D --&gt; E{&quot;a == 5 ?&quot;}
+    E -- Yes --&gt; F([break → 終了])
+    E -- No --&gt; B</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>反復</th><th>a 宣言直後</th><th>print 値</th><th>a++後</th><th>a==5?</th><th>コメント</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>false</td><td>続行</td></tr>
+        <tr><td>2</td><td>0</td><td>0</td><td>1</td><td>false</td><td>続行</td></tr>
+        <tr><td>3</td><td>0</td><td>0</td><td>1</td><td>false</td><td>続行</td></tr>
+        <tr><td>...</td><td>0</td><td>0</td><td>1</td><td>false</td><td>無限に同じ動作</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>0
+0
+0
+0
+...（無限ループ）</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>int a = 0;</code> がループ本体内にあるので、毎回 <code>a</code> は 0 に再初期化される。</li>
+      <li>結果として <code>a++</code> 後の <code>a</code> はいつも 1。<code>a == 5</code> は永遠に成立しないので <code>break</code> には到達しない。</li>
+      <li>ループ変数はループの外で宣言するのが鉄則。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

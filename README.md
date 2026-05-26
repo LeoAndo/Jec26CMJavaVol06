@@ -140,7 +140,19 @@ PR 作成または更新時にレビューが自動実行されます。
 
 - `README.md` : プロジェクト概要と実行方法
 - `TUTORIAL.md` : 授業用テキスト
+- `docs/flowcharts/` : フローチャート・トレース表（Markdown / HTML）
 - `AGENTS.md` : AI エージェント向け共通ルール
+
+## フローチャート HTML の生成
+
+`docs/flowcharts/*.md` をもとに、`docs/flowcharts/html/*.html` を生成します。
+
+```bash
+javac -encoding UTF-8 -d /tmp/flowchart-html-build tools/FlowchartHtmlGenerator.java
+java -cp /tmp/flowchart-html-build FlowchartHtmlGenerator
+```
+
+生成後は `docs/flowcharts/html/index.html` をブラウザで開くと、HTML 版の目次から各フローチャートを確認できます。
 
 ## ライセンス
 

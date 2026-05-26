@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0502 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0502.md">元の Markdown: Test0502.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0502 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/Test0502.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: 境界条件の確認。<code>x &gt; 5</code> で <code>x == 5</code> のときは false になる。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 5;
+if (x &gt; 5) {
+    System.out.print(&quot;A&quot;);
+} else {
+    System.out.print(&quot;B&quot;);
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 5&quot;]
+    B --&gt; C{&quot;x &gt; 5 ?&quot;}
+    C -- &quot;true&quot; --&gt; D[&quot;A を出力&quot;]
+    C -- &quot;false&quot; --&gt; E[&quot;B を出力&quot;]
+    D --&gt; Z([終了])
+    E --&gt; Z</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>条件判定</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int x = 5</code></td><td>5</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>if (x &gt; 5)</code></td><td>5</td><td><code>5 &gt; 5</code> → false</td><td>-</td></tr>
+        <tr><td>3</td><td><code>else</code> ブロック実行</td><td>5</td><td>-</td><td>-</td></tr>
+        <tr><td>4</td><td><code>System.out.print(&quot;B&quot;)</code></td><td>5</td><td>-</td><td>B</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>B</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>&gt;</code> は厳密大小（等しいときは false）。<code>&gt;=</code> と混同しないこと。</li>
+      <li>境界値（5 と 5）での動作を意識する。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

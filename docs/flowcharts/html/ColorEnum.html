@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ColorEnum — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../ColorEnum.md">元の Markdown: ColorEnum.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">ColorEnum — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/ColorEnum.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: 単純な enum 定義のサンプル。色を表す 3 つの定数（RED, BLUE, GREEN）を列挙する。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">enum ColorEnum {
+    RED, BLUE, GREEN
+}</code></pre>
+    <p>このファイルは <code>main</code> を持たず、enum 定義のみ。<code>SampleSwitchWithEnum</code> などから利用される。</p>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;enum ColorEnum を宣言&quot;]
+    B --&gt; C[&quot;定数 RED を定義&quot;]
+    C --&gt; D[&quot;定数 BLUE を定義&quot;]
+    D --&gt; E[&quot;定数 GREEN を定義&quot;]
+    E --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>定義された定数</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>enum ColorEnum { ... }</code></td><td>-</td></tr>
+        <tr><td>2</td><td><code>RED</code></td><td>RED</td></tr>
+        <tr><td>3</td><td><code>BLUE</code></td><td>RED, BLUE</td></tr>
+        <tr><td>4</td><td><code>GREEN</code></td><td>RED, BLUE, GREEN</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <p><code>main</code> メソッドを持たないため、このファイル単体での実行結果はない。 利用例（<code>SampleSwitchWithEnum.testColorEnum1()</code>）:</p>
+    <pre><code>RED</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>enum</code> は関連する複数の定数をひとつの型としてまとめる Java SE 1.5 以降の機能。</li>
+      <li><code>ColorEnum.RED</code> のように <code>型名.定数名</code> でアクセスする。</li>
+      <li><code>switch</code> 文の式に enum を渡すと、<code>case RED:</code> のように定数名のみで分岐できる。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

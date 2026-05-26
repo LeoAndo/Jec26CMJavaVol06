@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0539 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0539.md">元の Markdown: Test0539.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0539 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0539.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: do-while で 2 つの変数 a, b が連動して変化する累積処理。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">byte a = 1;
+byte b = 0;
+do {
+    b++;
+    a = a + b;
+    System.out.print(&quot;*&quot;);
+} while (a &lt; 5);</code></pre>
+    <ul>
+      <li>各周回で b を +1 し、a に b を足し込む。</li>
+      <li>a が 5 以上になったらループ終了。</li>
+    </ul>
+    <h2 id="section-3">コンパイルエラーについて</h2>
+    <p>このソースは、<code>a = a + b;</code> の行でコンパイルエラーになります。</p>
+    <p><code>a + b</code> では、Java の <strong>算術昇格（arithmetic promotion）</strong> が発生します。<code>byte</code> 同士の加算でも、Java は自動的に両方を <code>int</code> に変換してから計算します。そのため、計算結果は <code>int</code> 型になり、<code>byte</code> 型の変数 <code>a</code> にそのまま代入することはできません。</p>
+    <p>一方、<code>b++</code> は <code>++</code> 演算子が暗黙的にキャストを行うため、<code>byte</code> 型の変数に対してもコンパイルエラーにはなりません。</p>
+    <h2 id="section-4">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;a = 1, b = 0&quot;]
+    B --&gt; C[&quot;b++&quot;]
+    C --&gt; D[&quot;a = a + b&quot;]
+    D --&gt; E[&quot;print *&quot;]
+    E --&gt; F{&quot;a &lt; 5 ?&quot;}
+    F -- true --&gt; C
+    F -- false --&gt; G([終了])</pre>
+    <h2 id="section-5">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>周回</th><th>b++ 後 b</th><th>a = a + b 後 a</th><th>出力</th><th>判定式</th><th>結果</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>1</td><td>1 + 1 = 2</td><td><code>*</code></td><td><code>2 &lt; 5</code></td><td>true</td></tr>
+        <tr><td>2</td><td>2</td><td>2 + 2 = 4</td><td><code>**</code></td><td><code>4 &lt; 5</code></td><td>true</td></tr>
+        <tr><td>3</td><td>3</td><td>4 + 3 = 7</td><td><code>***</code></td><td><code>7 &lt; 5</code></td><td>false</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-6">実行結果（標準出力）</h2>
+    <pre><code>***</code></pre>
+    <h2 id="section-7">学習ポイント</h2>
+    <ul>
+      <li>2 変数を連動させると、増分が単純な等差ではなく階段状になる（+1, +2, +3 …）。</li>
+      <li>do-while は条件判定が後ろなので、最後の 1 回は条件を満たさない値で実行される。</li>
+      <li><code>byte</code> 型でも加算結果は <code>int</code> 型に昇格するため、<code>byte = byte + byte</code> の形ではコンパイルエラーになる。</li>
+      <li><code>b++</code> のようなインクリメント演算子では、演算後の値が暗黙的に元の型へ戻される。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

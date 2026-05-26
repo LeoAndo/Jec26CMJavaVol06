@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0513 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0513.md">元の Markdown: Test0513.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0513 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/Test0513.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: 代入式が値を返すことを利用したトリッキーな if 文。<code>b = !b</code> の中で代入と評価を同時に行う。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 10;
+boolean b = false;
+if (b = !b) {
+    System.out.print(x = 2 * x);
+} else {
+    System.out.print(b);
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 10, b = false&quot;]
+    B --&gt; C[&quot;!b を評価 → true&quot;]
+    C --&gt; D[&quot;b = true (代入式の値も true)&quot;]
+    D --&gt; E{&quot;if (true) ?&quot;}
+    E -- &quot;true&quot; --&gt; F[&quot;x = 2*x → x=20、x を出力&quot;]
+    E -- &quot;false&quot; --&gt; G[&quot;b を出力&quot;]
+    F --&gt; Z([終了])
+    G --&gt; Z</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>b</th><th>条件判定</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int x = 10</code></td><td>10</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>boolean b = false</code></td><td>10</td><td>false</td><td>-</td><td>-</td></tr>
+        <tr><td>3</td><td><code>if (b = !b)</code></td><td>10</td><td>true</td><td>代入式の値 true → if 成立</td><td>-</td></tr>
+        <tr><td>4</td><td><code>x = 2 * x</code></td><td>20</td><td>true</td><td>-</td><td>-</td></tr>
+        <tr><td>5</td><td><code>System.out.print(x)</code></td><td>20</td><td>true</td><td>-</td><td>20</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>20</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>b = !b</code> は代入式。値は代入後の <code>b</code>（true）を返す。</li>
+      <li><code>==</code>（比較）と <code>=</code>（代入）の取り違えに注意。boolean 型では <code>=</code> でも文法的に通ってしまう。</li>
+      <li><code>x = 2 * x</code> も代入式で、<code>println</code> の引数として代入後の値（20）が出力される。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

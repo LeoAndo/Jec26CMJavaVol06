@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleIf03 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleIf03.md">元の Markdown: SampleIf03.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleIf03 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/SampleIf03.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: <code>if-else if-else</code> による多分岐。正・負・ゼロの 3 通りに分岐する。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 0;
+if (x &gt; 0) {
+    System.out.println(&quot;xは正です。&quot;);
+} else if (x &lt; 0) {
+    System.out.println(&quot;Xは負です。&quot;);
+} else {
+    System.out.println(&quot;xはゼロです。&quot;);
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 0&quot;]
+    B --&gt; C{&quot;x &gt; 0 ?&quot;}
+    C -- &quot;true&quot; --&gt; D[&quot;xは正です。 を出力&quot;]
+    C -- &quot;false&quot; --&gt; E{&quot;x &lt; 0 ?&quot;}
+    E -- &quot;true&quot; --&gt; F[&quot;Xは負です。 を出力&quot;]
+    E -- &quot;false&quot; --&gt; G[&quot;xはゼロです。 を出力&quot;]
+    D --&gt; Z([終了])
+    F --&gt; Z
+    G --&gt; Z</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>条件判定</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int x = 0</code></td><td>0</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>if (x &gt; 0)</code></td><td>0</td><td><code>0 &gt; 0</code> → false</td><td>-</td></tr>
+        <tr><td>3</td><td><code>else if (x &lt; 0)</code></td><td>0</td><td><code>0 &lt; 0</code> → false</td><td>-</td></tr>
+        <tr><td>4</td><td><code>else</code> ブロックへ</td><td>0</td><td>-</td><td>-</td></tr>
+        <tr><td>5</td><td><code>System.out.println(&quot;xはゼロです。&quot;)</code></td><td>0</td><td>-</td><td>xはゼロです。</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>xはゼロです。</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>else if</code> を使うと 3 通り以上の分岐ができる。</li>
+      <li>条件は上から順に判定され、最初に true になった分岐だけが実行される。</li>
+      <li>どの条件にも当てはまらないとき <code>else</code> が実行される。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

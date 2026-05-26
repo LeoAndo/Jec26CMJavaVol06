@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0548 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0548.md">元の Markdown: Test0548.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0548 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0548.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: for 文の括弧内が空（構文エラー）。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">// Syntax error, insert &quot;; ; ) Statement&quot; to complete BlockStatements
+for() {
+    System.out.println(&quot;A&quot;);
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;for ( ) { ... }  ※括弧内が空でコンパイルエラー&quot;]
+    B --&gt; C([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>評価/コメント</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>for() { ... }</code></td><td>コンパイルエラー: 初期化部・条件部・更新部がすべて省略されていて構文上不正</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>（コンパイルエラーのため実行不可）</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>for 文の括弧内は最低でも 2 つのセミコロン <code>for(;;)</code> が必要。</li>
+      <li><code>for(;;)</code> であれば無限ループとして合法だが、<code>for()</code> のように <code>;</code> も書かないと構文エラー。</li>
+      <li>エラーメッセージ「insert &quot;; ; ) Statement&quot; to complete BlockStatements」は、足りない要素を補えという指摘。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleBreak02 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleBreak02.md">元の Markdown: SampleBreak02.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleBreak02 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/SampleBreak02.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: switch 文での <code>break</code> の使い方（ループではない break の例）。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int i = 2;
+switch (i) {
+    case 1:
+        System.out.println(&quot;iは1です。&quot;);
+        break;
+    case 2:
+        System.out.println(&quot;iは2です。&quot;);
+        break;
+    default:
+        System.out.println(&quot;iは3です。&quot;);
+        break;
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 2&quot;]
+    B --&gt; C{&quot;switch (i)&quot;}
+    C -- &quot;case 1&quot; --&gt; D[&quot;print iは1です。&quot;]
+    D --&gt; H([&quot;終了 (break)&quot;])
+    C -- &quot;case 2&quot; --&gt; E[&quot;print iは2です。&quot;]
+    E --&gt; H
+    C -- &quot;default&quot; --&gt; F[&quot;print iは3です。&quot;]
+    F --&gt; H</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>i</th><th>出力</th><th>コメント</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int i = 2;</code></td><td>2</td><td>（なし）</td><td></td></tr>
+        <tr><td>2</td><td><code>switch (i)</code></td><td>2</td><td>（なし）</td><td>i==2 で case 2 へ分岐</td></tr>
+        <tr><td>3</td><td><code>println(&quot;iは2です。&quot;)</code></td><td>2</td><td><code>iは2です。</code></td><td></td></tr>
+        <tr><td>4</td><td><code>break;</code></td><td>2</td><td>（なし）</td><td>switch を抜ける</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>iは2です。</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>break</code> は switch 文の中でも使われ、その case の処理を終えて switch を抜ける。</li>
+      <li>break が無いと次の case の処理に「フォールスルー」してしまう。</li>
+      <li>ループの break と書き方は同じだが、役割が異なる点に注意。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0551 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0551.md">元の Markdown: Test0551.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0551 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0551.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: 二重 for ループでの <code>continue</code>（外側）と <code>break</code>（内側）。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">for (int i = 0; i &lt; 5; i++) {
+    if (i % 3 == 1)
+        continue;
+    for (int j = 5; j &gt; 0; j--) {
+        if ((i + j) % 4 == 0)
+            break;
+        System.out.println(&quot;i=&quot; + i + &quot; j=&quot; + j);
+    }
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 0&quot;]
+    B --&gt; C{&quot;i &lt; 5 ?&quot;}
+    C -- No --&gt; Z([終了])
+    C -- Yes --&gt; D{&quot;i % 3 == 1 ?&quot;}
+    D -- Yes --&gt; E[&quot;continue → i++&quot;]
+    D -- No --&gt; F[&quot;j = 5&quot;]
+    F --&gt; G{&quot;j &gt; 0 ?&quot;}
+    G -- No --&gt; E
+    G -- Yes --&gt; H{&quot;(i+j) % 4 == 0 ?&quot;}
+    H -- Yes --&gt; E
+    H -- No --&gt; I[&quot;print i, j&quot;]
+    I --&gt; J[&quot;j--&quot;]
+    J --&gt; G
+    E --&gt; K[&quot;i++&quot;]
+    K --&gt; C</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>外 i</th><th>i%3==1?</th><th>内 j</th><th>(i+j)%4</th><th>動作</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0</td><td>no</td><td>5</td><td>1</td><td>print</td><td><code>i=0 j=5</code></td></tr>
+        <tr><td>0</td><td>-</td><td>4</td><td>0</td><td>break 内側</td><td>-</td></tr>
+        <tr><td>1</td><td>yes</td><td>-</td><td>-</td><td>continue 外側</td><td>-</td></tr>
+        <tr><td>2</td><td>no</td><td>5</td><td>3</td><td>print</td><td><code>i=2 j=5</code></td></tr>
+        <tr><td>2</td><td>-</td><td>4</td><td>2</td><td>print</td><td><code>i=2 j=4</code></td></tr>
+        <tr><td>2</td><td>-</td><td>3</td><td>1</td><td>print</td><td><code>i=2 j=3</code></td></tr>
+        <tr><td>2</td><td>-</td><td>2</td><td>0</td><td>break 内側</td><td>-</td></tr>
+        <tr><td>3</td><td>no</td><td>5</td><td>0</td><td>break 内側（即時）</td><td>-</td></tr>
+        <tr><td>4</td><td>yes</td><td>-</td><td>-</td><td>continue 外側</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>i=0 j=5
+i=2 j=5
+i=2 j=4
+i=2 j=3</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>ラベルなしの <code>break</code> / <code>continue</code> は最も内側のループにのみ作用する。</li>
+      <li>外側で <code>continue</code> を使うと、内側ループはそもそも実行されない（i=1, i=4 の場合）。</li>
+      <li>内側ループ条件不成立だけでなく、<code>break</code> でも内側ループから抜ける。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

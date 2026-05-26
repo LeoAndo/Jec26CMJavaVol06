@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0558 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0558.md">元の Markdown: Test0558.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0558 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0558.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: for 文での <code>continue</code>（次の反復へスキップ）。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">for (int i = 0; i &lt; 5; i++) {
+    if (i % 3 == 1)
+        continue;
+    System.out.print(i + &quot; &quot;);
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 0&quot;]
+    B --&gt; C{&quot;i &lt; 5 ?&quot;}
+    C -- No --&gt; Z([終了])
+    C -- Yes --&gt; D{&quot;i % 3 == 1 ?&quot;}
+    D -- Yes --&gt; F[&quot;continue → i++&quot;]
+    D -- No --&gt; E[&quot;print i + ' '&quot;]
+    E --&gt; F
+    F --&gt; C</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>反復</th><th>i</th><th>i&lt;5?</th><th>i%3==1?</th><th>動作</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>0</td><td>true</td><td>false</td><td>print</td><td><code>0 </code></td></tr>
+        <tr><td>2</td><td>1</td><td>true</td><td>true</td><td>continue</td><td>-</td></tr>
+        <tr><td>3</td><td>2</td><td>true</td><td>false</td><td>print</td><td><code>2 </code></td></tr>
+        <tr><td>4</td><td>3</td><td>true</td><td>false</td><td>print</td><td><code>3 </code></td></tr>
+        <tr><td>5</td><td>4</td><td>true</td><td>true</td><td>continue</td><td>-</td></tr>
+        <tr><td>6</td><td>5</td><td>false</td><td>-</td><td>終了</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>0 2 3 </code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>continue</code> は当該反復だけスキップし、更新部（<code>i++</code>）→ 条件判定に飛ぶ。</li>
+      <li><code>i % 3 == 1</code> を満たす i=1, 4 がスキップされる。</li>
+      <li>残った 0, 2, 3 のみ出力される。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

@@ -170,3 +170,11 @@
 ## 図の表示について
 
 各 .md は GitHub・IntelliJ IDEA・VS Code の Markdown プレビューで Mermaid 図がそのまま描画されます。Mermaid を解釈しない環境では、コードブロックの定義文を読むことでフロー構造を把握できます。
+
+HTML 版は `docs/flowcharts/html/index.html` から確認できます。
+再生成する場合は、リポジトリ直下で次のコマンドを実行します。
+
+```bash
+javac -encoding UTF-8 -d /tmp/flowchart-html-build tools/FlowchartHtmlGenerator.java
+java -cp /tmp/flowchart-html-build FlowchartHtmlGenerator
+```
