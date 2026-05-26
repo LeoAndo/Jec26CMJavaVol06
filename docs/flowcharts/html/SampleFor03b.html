@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleFor03b — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleFor03b.md">元の Markdown: SampleFor03b.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleFor03b — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/SampleFor03b.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: 変数 <code>i</code> を for の外で宣言し、初期化部で代入する形。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int i;
+for (i = 1; i &lt;= 5; i++) {
+    System.out.println(i + &quot;回目&quot;);
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;int i;&quot;]
+    B --&gt; C[&quot;i = 1（初期化）&quot;]
+    C --&gt; D{&quot;i &lt;= 5 ?&quot;}
+    D -- Yes --&gt; E[&quot;print i + 回目&quot;]
+    E --&gt; F[&quot;i++&quot;]
+    F --&gt; D
+    D -- No --&gt; G([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>実行前 i</th><th>条件 i&lt;=5</th><th>実行後 i</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int i;</code></td><td>-</td><td>-</td><td>未初期化</td><td>（なし）</td></tr>
+        <tr><td>2</td><td><code>i = 1</code></td><td>未初期化</td><td>-</td><td>1</td><td>（なし）</td></tr>
+        <tr><td>3</td><td>条件判定</td><td>1</td><td>true</td><td>1</td><td>（なし）</td></tr>
+        <tr><td>4</td><td><code>println</code></td><td>1</td><td>-</td><td>1</td><td><code>1回目</code></td></tr>
+        <tr><td>5</td><td><code>i++</code></td><td>1</td><td>-</td><td>2</td><td>（なし）</td></tr>
+        <tr><td>6</td><td>条件判定</td><td>2</td><td>true</td><td>2</td><td>（なし）</td></tr>
+        <tr><td>7</td><td><code>println</code></td><td>2</td><td>-</td><td>2</td><td><code>2回目</code></td></tr>
+        <tr><td>8</td><td><code>i++</code></td><td>2</td><td>-</td><td>3</td><td>（なし）</td></tr>
+        <tr><td>9</td><td>条件判定</td><td>3</td><td>true</td><td>3</td><td>（なし）</td></tr>
+        <tr><td>10</td><td><code>println</code></td><td>3</td><td>-</td><td>3</td><td><code>3回目</code></td></tr>
+        <tr><td>11</td><td><code>i++</code></td><td>3</td><td>-</td><td>4</td><td>（なし）</td></tr>
+        <tr><td>12</td><td>条件判定</td><td>4</td><td>true</td><td>4</td><td>（なし）</td></tr>
+        <tr><td>13</td><td><code>println</code></td><td>4</td><td>-</td><td>4</td><td><code>4回目</code></td></tr>
+        <tr><td>14</td><td><code>i++</code></td><td>4</td><td>-</td><td>5</td><td>（なし）</td></tr>
+        <tr><td>15</td><td>条件判定</td><td>5</td><td>true</td><td>5</td><td>（なし）</td></tr>
+        <tr><td>16</td><td><code>println</code></td><td>5</td><td>-</td><td>5</td><td><code>5回目</code></td></tr>
+        <tr><td>17</td><td><code>i++</code></td><td>5</td><td>-</td><td>6</td><td>（なし）</td></tr>
+        <tr><td>18</td><td>条件判定</td><td>6</td><td>false</td><td>6</td><td>ループを抜ける</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>1回目
+2回目
+3回目
+4回目
+5回目</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>for の初期化部は変数宣言だけでなく、既存変数への代入も書ける。</li>
+      <li>外側で宣言した <code>i</code> を使うと、ループ後にも <code>i</code> の値（最終的に 6）を参照できる。</li>
+      <li>通常は <code>SampleFor03a</code> のように for の中で宣言する方がスコープが狭く安全。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0510 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0510.md">元の Markdown: Test0510.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0510 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/Test0510.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: 非短絡演算子 <code>&amp;</code> の動作。両辺とも必ず評価されるため、副作用（<code>++</code>）が両方発生する。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 2, y = 3;
+if (x++ == 0 &amp; y++ &gt;= 3) {
+    System.out.print(&quot;A&quot;);
+} else {
+    System.out.print(&quot;B&quot;);
+}
+System.out.print(&quot;:&quot; + x + &quot;:&quot; + y);</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 2, y = 3&quot;]
+    B --&gt; C[&quot;左辺 x++==0 評価: x=2 を使い、x=3 に。 結果 false&quot;]
+    C --&gt; D[&quot;右辺 y++&gt;=3 評価: y=3 を使い、y=4 に。結果 true&quot;]
+    D --&gt; E{&quot;false &amp; true ?&quot;}
+    E -- &quot;true&quot; --&gt; F[&quot;A を出力&quot;]
+    E -- &quot;false&quot; --&gt; G[&quot;B を出力&quot;]
+    F --&gt; H[&quot;:x:y を出力&quot;]
+    G --&gt; H
+    H --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>y</th><th>条件判定</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int x = 2, y = 3</code></td><td>2</td><td>3</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>x++ == 0</code> を評価</td><td>2 → 3</td><td>3</td><td><code>2 == 0</code> → false</td><td>-</td></tr>
+        <tr><td>3</td><td><code>y++ &gt;= 3</code> を評価（<code>&amp;</code> は短絡しない）</td><td>3</td><td>3 → 4</td><td><code>3 &gt;= 3</code> → true</td><td>-</td></tr>
+        <tr><td>4</td><td><code>false &amp; true</code></td><td>3</td><td>4</td><td>false</td><td>-</td></tr>
+        <tr><td>5</td><td><code>else</code> 実行 → <code>System.out.print(&quot;B&quot;)</code></td><td>3</td><td>4</td><td>-</td><td>B</td></tr>
+        <tr><td>6</td><td><code>System.out.print(&quot;:&quot; + x + &quot;:&quot; + y)</code></td><td>3</td><td>4</td><td>-</td><td>:3:4</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>B:3:4</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>&amp;</code> は <strong>非短絡</strong> の論理 AND。左辺が false でも右辺を必ず評価する。</li>
+      <li><code>++</code> の副作用が両方適用されるため、x と y が両方インクリメントされる。</li>
+      <li><code>&amp;&amp;</code> との違いを <code>Test0511</code> と比較して理解する。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

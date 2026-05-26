@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0538 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0538.md">元の Markdown: Test0538.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0538 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0538.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: do-while で条件式に <code>false</code> リテラル。最低 1 回は実行される性質の確認。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">do {
+    System.out.print(&quot;*&quot;);
+} while (false);</code></pre>
+    <ul>
+      <li>条件が常に偽でも、do-while は本体が 1 回必ず実行される。</li>
+    </ul>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;print *&quot;]
+    B --&gt; C{&quot;false ?&quot;}
+    C -- false --&gt; D([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>周回</th><th>本体実行</th><th>出力</th><th>判定式</th><th>結果</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>print(&quot;*&quot;)</td><td><code>*</code></td><td><code>false</code></td><td>false（ループ終了）</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>*</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>do-while は「本体を実行 → 条件判定」の順なので、最初の 1 回は必ず実行される。</li>
+      <li>これは while(false) との重要な違い。while(false) なら出力は何もない。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleContinue01 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleContinue01.md">元の Markdown: SampleContinue01.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleContinue01 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/SampleContinue01.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: <code>continue</code> で残りの本体をスキップして次の反復へ進む基本例。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">for (int i = 0; i &lt; 3; i++) {
+    if (i == 1) {
+        continue;       // 残りをスキップ → 次の反復へ
+    }
+    System.out.println(i);
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 0&quot;]
+    B --&gt; C{&quot;i &lt; 3 ?&quot;}
+    C -- Yes --&gt; D{&quot;i == 1 ?&quot;}
+    D -- Yes --&gt; F[&quot;continue → i++ へ&quot;]
+    D -- No --&gt; E[&quot;print i&quot;]
+    E --&gt; F2[&quot;i++&quot;]
+    F --&gt; F2
+    F2 --&gt; C
+    C -- No --&gt; G([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>i</th><th>条件 i&lt;3</th><th>i==1</th><th>出力</th><th>コメント</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>0</td><td>true</td><td>false</td><td><code>0</code></td><td>通常実行</td></tr>
+        <tr><td>2</td><td>1</td><td>true</td><td>true</td><td>（なし）</td><td><strong>continue で次の反復へ</strong></td></tr>
+        <tr><td>3</td><td>2</td><td>true</td><td>false</td><td><code>2</code></td><td>通常実行</td></tr>
+        <tr><td>4</td><td>3</td><td>false</td><td>-</td><td>（なし）</td><td>ループを抜ける</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>0
+2</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>continue</code> は本体の残りをスキップし、更新式と条件判定に進む。</li>
+      <li><code>break</code> はループ全体を抜けるが、<code>continue</code> はその反復だけスキップ。</li>
+      <li>結果として、特定の値のときだけ処理を飛ばす書き方ができる。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

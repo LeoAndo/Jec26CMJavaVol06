@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0545 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0545.md">元の Markdown: Test0545.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0545 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0545.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: 更新式を省略した for 文（<code>;</code> だけ）。ループ本体内で i を変化させる。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">for (int i = 1; i &lt;= 10;) {
+    if (i &lt;= 3) {
+        i++;
+    } else {
+        i *= 2;
+    }
+    System.out.print(i + &quot; &quot;);
+}</code></pre>
+    <ul>
+      <li>for 文の 3 番目の更新式は省略可能（セミコロンだけは残す）。</li>
+      <li>本体で i を変化させないと無限ループになるので、本体内の if-else で必ず i を更新している。</li>
+    </ul>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 1&quot;]
+    B --&gt; C{&quot;i &lt;= 10 ?&quot;}
+    C -- true --&gt; D{&quot;i &lt;= 3 ?&quot;}
+    D -- true --&gt; E[&quot;i++&quot;]
+    D -- false --&gt; F[&quot;i *= 2&quot;]
+    E --&gt; G[&quot;print i + ' '&quot;]
+    F --&gt; G
+    G --&gt; C
+    C -- false --&gt; H([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>周回</th><th>判定前 i</th><th><code>i &lt;= 10</code></th><th><code>i &lt;= 3</code></th><th>更新後 i</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>1</td><td>true</td><td>true (i++)</td><td>2</td><td><code>2 </code></td></tr>
+        <tr><td>2</td><td>2</td><td>true</td><td>true (i++)</td><td>3</td><td><code>3 </code></td></tr>
+        <tr><td>3</td><td>3</td><td>true</td><td>true (i++)</td><td>4</td><td><code>4 </code></td></tr>
+        <tr><td>4</td><td>4</td><td>true</td><td>false (i *= 2)</td><td>8</td><td><code>8 </code></td></tr>
+        <tr><td>5</td><td>8</td><td>true</td><td>false (i *= 2)</td><td>16</td><td><code>16 </code></td></tr>
+        <tr><td>6</td><td>16</td><td>false</td><td>-</td><td>-</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>2 3 4 8 16 </code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>for 文の各要素（初期化・条件・更新）はそれぞれ省略可能。</li>
+      <li>更新を省略した場合、本体内で必ずカウンタを変化させないと無限ループになる。</li>
+      <li>条件分岐で異なる更新ルール（+1 と *2）を切り替えるパターン。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

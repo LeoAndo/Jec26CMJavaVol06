@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0543 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0543.md">元の Markdown: Test0543.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0543 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0543.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: 更新式に <code>i += 3</code> を使い、3 飛ばしで増加する for 文。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">for (int i = 1; i &lt;= 10; i += 3) {
+    System.out.print(i + &quot; &quot;);
+}</code></pre>
+    <ul>
+      <li>i は 1, 4, 7, 10, 13 ... と 3 ずつ増える。</li>
+    </ul>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 1&quot;]
+    B --&gt; C{&quot;i &lt;= 10 ?&quot;}
+    C -- true --&gt; D[&quot;print i + ' '&quot;]
+    D --&gt; E[&quot;i += 3&quot;]
+    E --&gt; C
+    C -- false --&gt; F([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>周回</th><th>判定式</th><th>結果</th><th>出力</th><th><code>i += 3</code> 後</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>1 &lt;= 10</code></td><td>true</td><td><code>1 </code></td><td>4</td></tr>
+        <tr><td>2</td><td><code>4 &lt;= 10</code></td><td>true</td><td><code>4 </code></td><td>7</td></tr>
+        <tr><td>3</td><td><code>7 &lt;= 10</code></td><td>true</td><td><code>7 </code></td><td>10</td></tr>
+        <tr><td>4</td><td><code>10 &lt;= 10</code></td><td>true</td><td><code>10 </code></td><td>13</td></tr>
+        <tr><td>5</td><td><code>13 &lt;= 10</code></td><td>false</td><td>-</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>1 4 7 10 </code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>等差の差分（公差）は更新式で調整できる。</li>
+      <li>終了条件が <code>&lt;= 10</code> なので、10 はちょうど含まれる点に注意。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

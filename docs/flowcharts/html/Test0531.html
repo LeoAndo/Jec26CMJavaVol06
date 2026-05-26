@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0531 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0531.md">元の Markdown: Test0531.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0531 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0531.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: byte 型のカウンタと、ループ本体で式 <code>3 * i</code> を出力するパターン。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">byte i = 0;
+while (i++ &lt; 4) {
+    System.out.print(3 * i + &quot; &quot;);
+}</code></pre>
+    <ul>
+      <li>条件 <code>i++ &lt; 4</code> は判定後に i を +1。</li>
+      <li>本体に入ったときの i は判定時 +1 された値なので、<code>3 * i</code> は 3, 6, 9, 12 …となる。</li>
+    </ul>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;byte i = 0&quot;]
+    B --&gt; C{&quot;i++ &lt; 4 ?&quot;}
+    C -- true --&gt; D[&quot;print 3 * i + ' '&quot;]
+    D --&gt; C
+    C -- false --&gt; E([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>周回</th><th>判定式</th><th>判定時 i</th><th>判定後 i</th><th>結果</th><th>3 * i</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>0 &lt; 4</code></td><td>0</td><td>1</td><td>true</td><td>3</td><td><code>3 </code></td></tr>
+        <tr><td>2</td><td><code>1 &lt; 4</code></td><td>1</td><td>2</td><td>true</td><td>6</td><td><code>6 </code></td></tr>
+        <tr><td>3</td><td><code>2 &lt; 4</code></td><td>2</td><td>3</td><td>true</td><td>9</td><td><code>9 </code></td></tr>
+        <tr><td>4</td><td><code>3 &lt; 4</code></td><td>3</td><td>4</td><td>true</td><td>12</td><td><code>12 </code></td></tr>
+        <tr><td>5</td><td><code>4 &lt; 4</code></td><td>4</td><td>5</td><td>false</td><td>-</td><td>（ループ終了）</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>3 6 9 12 </code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>byte</code> 型でも、算術演算 <code>3 * i</code> は int に昇格して計算される。</li>
+      <li>後置インクリメントとループ本体の式評価のタイミングに注意。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleContinue02 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleContinue02.md">元の Markdown: SampleContinue02.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleContinue02 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/SampleContinue02.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: <code>continue</code> を使って偶数をスキップし、奇数だけ表示する。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">for (int i = 0; i &lt; 10; i++) {
+    if (i % 2 == 0) {
+        continue;       // 偶数ならスキップ
+    }
+    System.out.print(i + &quot; &quot;);
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 0&quot;]
+    B --&gt; C{&quot;i &lt; 10 ?&quot;}
+    C -- Yes --&gt; D{&quot;i % 2 == 0 ?&quot;}
+    D -- Yes --&gt; F[&quot;continue → i++ へ&quot;]
+    D -- No --&gt; E[&quot;print i + 空白&quot;]
+    E --&gt; F2[&quot;i++&quot;]
+    F --&gt; F2
+    F2 --&gt; C
+    C -- No --&gt; G([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>i</th><th>条件 i&lt;10</th><th>i%2==0</th><th>出力</th><th>コメント</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>0</td><td>true</td><td>true</td><td>（なし）</td><td><strong>continue</strong></td></tr>
+        <tr><td>2</td><td>1</td><td>true</td><td>false</td><td><code>1 </code></td><td>出力</td></tr>
+        <tr><td>3</td><td>2</td><td>true</td><td>true</td><td>（なし）</td><td><strong>continue</strong></td></tr>
+        <tr><td>4</td><td>3</td><td>true</td><td>false</td><td><code>3 </code></td><td>出力</td></tr>
+        <tr><td>5</td><td>4</td><td>true</td><td>true</td><td>（なし）</td><td><strong>continue</strong></td></tr>
+        <tr><td>6</td><td>5</td><td>true</td><td>false</td><td><code>5 </code></td><td>出力</td></tr>
+        <tr><td>7</td><td>6</td><td>true</td><td>true</td><td>（なし）</td><td><strong>continue</strong></td></tr>
+        <tr><td>8</td><td>7</td><td>true</td><td>false</td><td><code>7 </code></td><td>出力</td></tr>
+        <tr><td>9</td><td>8</td><td>true</td><td>true</td><td>（なし）</td><td><strong>continue</strong></td></tr>
+        <tr><td>10</td><td>9</td><td>true</td><td>false</td><td><code>9 </code></td><td>出力</td></tr>
+        <tr><td>11</td><td>10</td><td>false</td><td>-</td><td>（なし）</td><td>ループを抜ける</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>1 3 5 7 9 </code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>i % 2 == 0</code> で偶数を判定（剰余演算子の典型用途）。</li>
+      <li>偶数を continue でスキップすることで、奇数だけが出力される。</li>
+      <li>同じ動きを <code>if (i % 2 != 0) print(i);</code> で書くこともできる。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

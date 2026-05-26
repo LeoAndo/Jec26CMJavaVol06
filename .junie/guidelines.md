@@ -1,1 +1,1 @@
-Follow [AGENTS.md](../AGENTS.md) as the single source of truth for coding rules.
+コーディング規約とレビュー方針は [AGENTS.md](../AGENTS.md) を Single Source of Truth として参照してください。

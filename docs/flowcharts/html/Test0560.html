@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0560 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0560.md">元の Markdown: Test0560.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0560 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0560.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: <code>do-while</code> 内での後置インクリメント／前置インクリメントの評価順と <code>continue</code>。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 1;
+do {
+    if (x++ / 2 == 1) {
+        continue;
+    }
+    System.out.print(++x + &quot; &quot;);
+} while (x &lt;= 10);</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 1&quot;]
+    B --&gt; C[&quot;評価 x++ / 2  ※xは式評価後に+1&quot;]
+    C --&gt; D{&quot;== 1 ?&quot;}
+    D -- Yes --&gt; F[&quot;continue → while条件へ&quot;]
+    D -- No --&gt; E[&quot;++x; print x + ' '&quot;]
+    E --&gt; F
+    F --&gt; G{&quot;x &lt;= 10 ?&quot;}
+    G -- Yes --&gt; C
+    G -- No --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>反復</th><th>開始 x</th><th>x++ の式値</th><th>x++後 x</th><th>式値/2</th><th>==1?</th><th>動作</th><th>出力後 x</th><th>出力</th><th>次の x&lt;=10?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>1</td><td>1</td><td>2</td><td>0</td><td>no</td><td><code>++x</code> → x=3, print</td><td>3</td><td><code>3 </code></td><td>yes</td></tr>
+        <tr><td>2</td><td>3</td><td>3</td><td>4</td><td>1</td><td>yes</td><td>continue</td><td>4</td><td>-</td><td>yes</td></tr>
+        <tr><td>3</td><td>4</td><td>4</td><td>5</td><td>2</td><td>no</td><td><code>++x</code> → x=6, print</td><td>6</td><td><code>6 </code></td><td>yes</td></tr>
+        <tr><td>4</td><td>6</td><td>6</td><td>7</td><td>3</td><td>no</td><td><code>++x</code> → x=8, print</td><td>8</td><td><code>8 </code></td><td>yes</td></tr>
+        <tr><td>5</td><td>8</td><td>8</td><td>9</td><td>4</td><td>no</td><td><code>++x</code> → x=10, print</td><td>10</td><td><code>10 </code></td><td>yes (10&lt;=10)</td></tr>
+        <tr><td>6</td><td>10</td><td>10</td><td>11</td><td>5</td><td>no</td><td><code>++x</code> → x=12, print</td><td>12</td><td><code>12 </code></td><td>no → 終了</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>3 6 8 10 12 </code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>後置 <code>x++</code> は「現在値を式で使用、その後 +1」。<code>x++ / 2 == 1</code> の評価には更新前の値が使われる。</li>
+      <li>前置 <code>++x</code> は「先に +1、その値を式で使用」。print に渡るのは増加後の値。</li>
+      <li><code>continue</code> で <code>print(++x)</code> をスキップした場合、その反復では <code>++x</code> が実行されない点に注意。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

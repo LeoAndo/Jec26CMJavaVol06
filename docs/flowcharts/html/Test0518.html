@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0518 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0518.md">元の Markdown: Test0518.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0518 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/Test0518.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: <code>char</code> 型を switch の式に使うサンプル。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">char c = 'a';
+switch (c) {
+    case 'a':
+        System.out.print(&quot;A&quot;);
+        break;
+    case 'b':
+        System.out.print(&quot;B&quot;);
+        break;
+    case 'c':
+        System.out.print(&quot;C&quot;);
+        break;
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;c = 'a'&quot;]
+    B --&gt; C{&quot;c の値&quot;}
+    C -- &quot;'a'&quot; --&gt; D[&quot;A を出力 → break&quot;]
+    C -- &quot;'b'&quot; --&gt; E[&quot;B を出力 → break&quot;]
+    C -- &quot;'c'&quot; --&gt; F[&quot;C を出力 → break&quot;]
+    D --&gt; Z([終了])
+    E --&gt; Z
+    F --&gt; Z</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>c</th><th>マッチした case</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>char c = 'a'</code></td><td>'a'</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>switch (c)</code></td><td>'a'</td><td>case 'a' にジャンプ</td><td>-</td></tr>
+        <tr><td>3</td><td><code>case 'a': print(&quot;A&quot;)</code></td><td>'a'</td><td>'a'</td><td>A</td></tr>
+        <tr><td>4</td><td><code>break</code></td><td>'a'</td><td>-</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>A</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>char</code> 型は整数として扱われるため、switch の式に使える。</li>
+      <li><code>case</code> ラベルには文字リテラル <code>'a'</code> を直接書ける。</li>
+      <li><code>String</code> も Java SE 7 以降で switch に使える（→ <code>Test0520</code>）。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

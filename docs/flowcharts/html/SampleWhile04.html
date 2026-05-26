@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleWhile04 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleWhile04.md">元の Markdown: SampleWhile04.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleWhile04 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/SampleWhile04.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: ブロックスコープのコンパイルエラーを意図したサンプル（<code>x cannot be resolved</code>）。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int i = 1;
+while (i &lt;= 10) {
+    int x = 0;                              // while ブロック内で宣言
+    System.out.println(i + &quot;回目&quot; + x);
+    x++;
+    i++;
+}
+System.out.println(x); // ← x cannot be resolved to a variable（コンパイルエラー）</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <blockquote>
+      <p>コンパイルエラーがあるため実行はできない。エラーが無かったと仮定した論理フローを示す。</p>
+    </blockquote>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 1&quot;]
+    B --&gt; C{&quot;i &lt;= 10 ?&quot;}
+    C -- Yes --&gt; D[&quot;x = 0&quot;]
+    D --&gt; E[&quot;print i + 回目 + x&quot;]
+    E --&gt; F[&quot;x++&quot;]
+    F --&gt; G[&quot;i++&quot;]
+    G --&gt; C
+    C -- No --&gt; H[&quot;print x（コンパイルエラー）&quot;]
+    H --&gt; I([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <blockquote>
+      <p>コンパイルエラーで実行不可。仮にスコープエラーが無かった場合のトレースを示す（ループ内の <code>x</code> は毎回 0 で初期化される想定）。</p>
+    </blockquote>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>実行前 i</th><th>実行前 x</th><th>条件 i&lt;=10</th><th>実行後 i</th><th>実行後 x</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int i = 1;</code></td><td>-</td><td>-</td><td>-</td><td>1</td><td>-</td><td>（なし）</td></tr>
+        <tr><td>2</td><td>条件判定</td><td>1</td><td>-</td><td>true</td><td>1</td><td>-</td><td>（なし）</td></tr>
+        <tr><td>3</td><td><code>int x = 0; println; x++; i++;</code></td><td>1</td><td>-</td><td>-</td><td>2</td><td>1</td><td><code>1回目0</code></td></tr>
+        <tr><td>4</td><td>条件判定</td><td>2</td><td>-</td><td>true</td><td>2</td><td>-</td><td>（なし）</td></tr>
+        <tr><td>5</td><td><code>int x = 0; println; x++; i++;</code></td><td>2</td><td>-</td><td>-</td><td>3</td><td>1</td><td><code>2回目0</code></td></tr>
+        <tr><td>6</td><td>条件判定</td><td>3</td><td>-</td><td>true</td><td>3</td><td>-</td><td>（なし）</td></tr>
+        <tr><td>7</td><td><code>int x = 0; println; x++; i++;</code></td><td>3</td><td>-</td><td>-</td><td>4</td><td>1</td><td><code>3回目0</code></td></tr>
+        <tr><td>...</td><td>...（i=4〜9 まで同様）</td><td>...</td><td>-</td><td>true</td><td>...</td><td>1</td><td><code>4回目0</code> 〜 <code>9回目0</code></td></tr>
+        <tr><td>n</td><td><code>int x = 0; println; x++; i++;</code></td><td>10</td><td>-</td><td>true</td><td>11</td><td>1</td><td><code>10回目0</code></td></tr>
+        <tr><td>n+1</td><td>条件判定</td><td>11</td><td>-</td><td>false</td><td>11</td><td>-</td><td>ループを抜ける</td></tr>
+        <tr><td>n+2</td><td><code>println(x)</code></td><td>11</td><td>-</td><td>-</td><td>11</td><td>-</td><td>（実際にはコンパイルエラー）</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>（コンパイルエラーのため実行不可）
+SampleWhile04.java:12: error: cannot find symbol
+        System.out.println(x); // x cannot be resolved to a variable
+                           ^
+  symbol:   variable x</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>このサンプルは <strong>コンパイルエラーを学ぶ目的の教材</strong> (AGENTS.md に明記)。</li>
+      <li>ブロック <code>{ ... }</code> 内で宣言した変数は、そのブロックの外では使えない。</li>
+      <li>ループの外で <code>x</code> を使いたい場合は、while の前に <code>int x;</code> と宣言しておく必要がある。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

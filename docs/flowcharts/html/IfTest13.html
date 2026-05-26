@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IfTest13 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../IfTest13.md">元の Markdown: IfTest13.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">IfTest13 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/IfTest13.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: <code>{}</code> を省略した if 文の落とし穴。直後の 1 文だけが if の本体で、その次の文は常に実行される。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = -10;
+if (x &gt; 0)
+    System.out.println(&quot;A&quot;);
+System.out.println(&quot;B&quot;);</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = -10&quot;]
+    B --&gt; C{&quot;x &gt; 0 ?&quot;}
+    C -- &quot;true&quot; --&gt; D[&quot;A を出力&quot;]
+    C -- &quot;false&quot; --&gt; E[&quot;B を出力&quot;]
+    D --&gt; E
+    E --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>条件判定</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int x = -10</code></td><td>-10</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>if (x &gt; 0)</code></td><td>-10</td><td><code>-10 &gt; 0</code> → false</td><td>-</td></tr>
+        <tr><td>3</td><td><code>System.out.println(&quot;A&quot;)</code></td><td>-</td><td>-</td><td>（スキップ）</td></tr>
+        <tr><td>4</td><td><code>System.out.println(&quot;B&quot;)</code></td><td>-10</td><td>-</td><td>B</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>B</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>{}</code> を省略した if 文は、<strong>直後の 1 文のみ</strong>を本体とする。</li>
+      <li>インデントだけで if の支配下にあるかのように見える文も、実際にはブロック外で常に実行される。</li>
+      <li>可読性のため、本体が 1 文でも <code>{}</code> を付けるのが安全。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

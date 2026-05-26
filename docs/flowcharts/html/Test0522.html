@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0522 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0522.md">元の Markdown: Test0522.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0522 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/Test0522.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: <code>long</code> 型は switch の式に使えないことを確認するコンパイルエラーのサンプル。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">long x = 2;
+// Cannot switch on a value of type long. Only convertible int values, strings
+// or enum variables are permitted
+switch (x) {
+    case 1:
+        x *= 10;
+    case 2:
+        x += 2;
+        break;
+    default:
+        ++x;
+}
+System.out.println(x);</code></pre>
+    <h2 id="section-3">フローチャート（仮に switch が <code>int</code> だった場合の論理フロー）</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 2&quot;]
+    B --&gt; C{&quot;x の値&quot;}
+    C -- &quot;1&quot; --&gt; D[&quot;x *= 10&quot;]
+    D --&gt; E[&quot;x += 2 → break&quot;]
+    C -- &quot;2&quot; --&gt; E
+    C -- &quot;default&quot; --&gt; F[&quot;++x&quot;]
+    E --&gt; G[&quot;x を出力&quot;]
+    F --&gt; G
+    G --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表（仮にコンパイルが通った場合）</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>マッチした case</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>long x = 2</code></td><td>2</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>switch (x)</code></td><td>2</td><td>case 2 にジャンプ</td><td>-</td></tr>
+        <tr><td>3</td><td><code>case 2: x += 2</code></td><td>4</td><td>2</td><td>-</td></tr>
+        <tr><td>4</td><td><code>break</code></td><td>4</td><td>-</td><td>-</td></tr>
+        <tr><td>5</td><td><code>System.out.println(x)</code></td><td>4</td><td>-</td><td>4</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <p>このコードはコンパイルエラーになる:</p>
+    <pre><code>Cannot switch on a value of type long. Only convertible int values, strings or enum variables are permitted</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>このファイルは<strong>コンパイルエラーを含む</strong>学習用サンプル。</li>
+      <li>switch の式に使える型は <code>byte</code>/<code>short</code>/<code>int</code>/<code>char</code>（およびそのラッパー）、<code>String</code>、<code>enum</code> のみ。</li>
+      <li><code>long</code>、<code>float</code>、<code>double</code>、<code>boolean</code> は使えない。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

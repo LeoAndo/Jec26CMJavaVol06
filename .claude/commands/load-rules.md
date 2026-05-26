@@ -1,2 +1,2 @@
-Load the project rules from @AGENTS.md.
-Summarize the non-negotiable constraints in ≤5 bullets before taking any action.
+`@AGENTS.md` からプロジェクトルールを読み込んでください。
+作業を始める前に、必ず守る制約を 5 項目以内で要約してください。

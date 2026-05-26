@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleSwitchWithEnum — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleSwitchWithEnum.md">元の Markdown: SampleSwitchWithEnum.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleSwitchWithEnum — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/SampleSwitchWithEnum.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: enum を switch で分岐する書き方を学ぶ。<code>ColorEnum</code>（値なし）と <code>ColorEnum2</code>（値付き）の両方を例にする。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">public static void main(String[] args) {
+    // testColorEnum1();
+    testColorEnum2();
+}
+
+private static void testColorEnum1() {
+    ColorEnum enum1 = ColorEnum.RED;
+    switch (enum1) {
+        case RED:   System.out.println(&quot;RED&quot;); break;
+        case BLUE:  System.out.println(&quot;BLUE&quot;); break;
+        case GREEN: System.out.println(&quot;GREEN&quot;); break;
+    }
+}
+
+private static void testColorEnum2() {
+    ColorEnum2 enum1 = ColorEnum2.BLUE;
+    switch (enum1.getNum()) {
+        case 100: System.out.println(&quot;RED: num &quot; + enum1.getNum()); break;
+        case 200: System.out.println(&quot;BLUE: num &quot; + enum1.getNum()); break;
+        case 300: System.out.println(&quot;GREEN: num &quot; + enum1.getNum()); break;
+    }
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;main: testColorEnum2() を呼び出し&quot;]
+    B --&gt; C[&quot;enum1 = ColorEnum2.BLUE&quot;]
+    C --&gt; D[&quot;enum1.getNum() = 200&quot;]
+    D --&gt; E{&quot;200 の値&quot;}
+    E -- &quot;100&quot; --&gt; F[&quot;RED: num ... を出力&quot;]
+    E -- &quot;200&quot; --&gt; G[&quot;BLUE: num 200 を出力&quot;]
+    E -- &quot;300&quot; --&gt; H[&quot;GREEN: num ... を出力&quot;]
+    F --&gt; Z([終了])
+    G --&gt; Z
+    H --&gt; Z</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>enum1</th><th>getNum()</th><th>マッチした case</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>main</code> → <code>testColorEnum2()</code></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>ColorEnum2 enum1 = ColorEnum2.BLUE</code></td><td>BLUE</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>3</td><td><code>switch (enum1.getNum())</code></td><td>BLUE</td><td>200</td><td>case 200 にジャンプ</td><td>-</td></tr>
+        <tr><td>4</td><td><code>case 200: ...</code></td><td>BLUE</td><td>200</td><td>200</td><td>BLUE: num 200</td></tr>
+        <tr><td>5</td><td><code>break</code> → switch を抜ける</td><td>BLUE</td><td>200</td><td>-</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>BLUE: num 200</code></pre>
+    <p>参考: <code>testColorEnum1()</code> を呼ぶと <code>RED</code> のみが出力される。</p>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>enum を switch の式に渡すと、<code>case RED:</code> のように <strong>enum 型名を省略</strong>して定数名だけで書ける（<code>testColorEnum1</code>）。</li>
+      <li>値付き enum は <code>getNum()</code> で数値を取り出して switch することもできる（<code>testColorEnum2</code>）。</li>
+      <li><code>private static</code> メソッドに分けることで、main から好きな方を呼び分けられる構成。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

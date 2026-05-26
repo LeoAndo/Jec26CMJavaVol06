@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0552 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0552.md">元の Markdown: Test0552.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0552 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0552.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: 外側スコープで宣言した変数を使う二重 for + switch、内側ループ変数の再利用。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int i = 0, j = 5;
+for (; i &lt; 5; i++) {
+    for (; j &gt; 0; j--) {
+        switch (i + j) {
+            case 3:
+                break; // switch を抜けるだけ
+        }
+        System.out.println(&quot;i=&quot; + i + &quot; j=&quot; + j);
+    }
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i=0, j=5&quot;]
+    B --&gt; C{&quot;i &lt; 5 ?&quot;}
+    C -- No --&gt; Z([終了])
+    C -- Yes --&gt; D{&quot;j &gt; 0 ?&quot;}
+    D -- No --&gt; E[&quot;i++&quot;]
+    E --&gt; C
+    D -- Yes --&gt; F[&quot;switch(i+j)&quot;]
+    F --&gt; G[&quot;case 3: break (switchのみ)&quot;]
+    G --&gt; H[&quot;print i, j&quot;]
+    F --&gt; H
+    H --&gt; I[&quot;j--&quot;]
+    I --&gt; D</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>外 i</th><th>内 j</th><th>i+j</th><th>switch動作</th><th>出力</th><th>次の j</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0</td><td>5</td><td>5</td><td>一致なし</td><td><code>i=0 j=5</code></td><td>4</td></tr>
+        <tr><td>0</td><td>4</td><td>4</td><td>一致なし</td><td><code>i=0 j=4</code></td><td>3</td></tr>
+        <tr><td>0</td><td>3</td><td>3</td><td>case 3 → break(switch)</td><td><code>i=0 j=3</code></td><td>2</td></tr>
+        <tr><td>0</td><td>2</td><td>2</td><td>一致なし</td><td><code>i=0 j=2</code></td><td>1</td></tr>
+        <tr><td>0</td><td>1</td><td>1</td><td>一致なし</td><td><code>i=0 j=1</code></td><td>0 → 内側終了</td></tr>
+        <tr><td>1〜4</td><td>0</td><td>-</td><td>内側 j&gt;0 不成立で入らない</td><td>-</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>i=0 j=5
+i=0 j=4
+i=0 j=3
+i=0 j=2
+i=0 j=1</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>for の初期化部を空にし、外で宣言した変数を流用できる（<code>for (; i &lt; 5; i++)</code>）。</li>
+      <li>内側ループ変数 <code>j</code> も外側スコープなので、内側を抜けた後はリセットされない。一度 0 になると、以降の外側反復では内側に入らない。</li>
+      <li><code>switch</code> 内の <code>break</code> は switch を抜けるだけで、ループには影響しない。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

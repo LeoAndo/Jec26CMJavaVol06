@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0532 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0532.md">元の Markdown: Test0532.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0532 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0532.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: 前置デクリメント <code>--i</code> を条件式に持ち、ループ本体でも <code>i -= 3</code> と i を変更する複合的なパターン。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int i = 10;
+while (--i &gt; 1) {
+    i -= 3;
+    System.out.print(i + &quot; &quot;);
+}</code></pre>
+    <ul>
+      <li>条件式 <code>--i &gt; 1</code> は「i を先に -1 してから比較」。</li>
+      <li>本体でさらに <code>i -= 3</code>。1 周回ごとに i は実質 -4 進む。</li>
+    </ul>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 10&quot;]
+    B --&gt; C{&quot;--i &gt; 1 ?&quot;}
+    C -- true --&gt; D[&quot;i -= 3&quot;]
+    D --&gt; E[&quot;print i + ' '&quot;]
+    E --&gt; C
+    C -- false --&gt; F([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>周回</th><th>判定前 i</th><th><code>--i</code> 後</th><th>判定式</th><th>結果</th><th><code>i -= 3</code> 後</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>10</td><td>9</td><td><code>9 &gt; 1</code></td><td>true</td><td>6</td><td><code>6 </code></td></tr>
+        <tr><td>2</td><td>6</td><td>5</td><td><code>5 &gt; 1</code></td><td>true</td><td>2</td><td><code>2 </code></td></tr>
+        <tr><td>3</td><td>2</td><td>1</td><td><code>1 &gt; 1</code></td><td>false</td><td>-</td><td>（ループ終了）</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>6 2 </code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>前置 <code>--i</code> は「先に -1 し、その値で比較」する。</li>
+      <li>ループ本体内で条件変数を書き換えると、増減幅が見た目以上に大きくなる。</li>
+      <li>ループ終了時の i は、条件が偽になった瞬間の値（ここでは 1）。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

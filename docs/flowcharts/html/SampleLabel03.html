@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleLabel03 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleLabel03.md">元の Markdown: SampleLabel03.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleLabel03 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/SampleLabel03.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: ラベル付き <code>continue outerLoop;</code> で外側ループの次の反復へ進む。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">outerLoop: for (int i = 1; i &lt;= 3; i++) {
+    for (int j = 1; j &lt;= 2; j++) {
+        if (i == 2) {
+            continue outerLoop;   // 外側の次の i へ
+        }
+        System.out.println(i + &quot;:&quot; + j);
+    }
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 1 (outerLoop)&quot;]
+    B --&gt; C{&quot;i &lt;= 3 ?&quot;}
+    C -- Yes --&gt; D[&quot;j = 1&quot;]
+    D --&gt; E{&quot;j &lt;= 2 ?&quot;}
+    E -- Yes --&gt; F{&quot;i == 2 ?&quot;}
+    F -- Yes --&gt; J[&quot;continue outerLoop → i++&quot;]
+    F -- No --&gt; G[&quot;print i + : + j&quot;]
+    G --&gt; H[&quot;j++&quot;]
+    H --&gt; E
+    E -- No --&gt; I[&quot;i++&quot;]
+    J --&gt; I
+    I --&gt; C
+    C -- No --&gt; K([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>外側 i</th><th>内側 j</th><th>i==2</th><th>出力</th><th>コメント</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>1</td><td>1</td><td>false</td><td><code>1:1</code></td><td></td></tr>
+        <tr><td>2</td><td>1</td><td>2</td><td>false</td><td><code>1:2</code></td><td></td></tr>
+        <tr><td>3</td><td>1</td><td>3</td><td>-</td><td>（なし）</td><td>内側 false → i++</td></tr>
+        <tr><td>4</td><td>2</td><td>1</td><td>true</td><td>（なし）</td><td><strong>label で外側の次の i へ</strong></td></tr>
+        <tr><td>5</td><td>3</td><td>1</td><td>false</td><td><code>3:1</code></td><td></td></tr>
+        <tr><td>6</td><td>3</td><td>2</td><td>false</td><td><code>3:2</code></td><td></td></tr>
+        <tr><td>7</td><td>3</td><td>3</td><td>-</td><td>（なし）</td><td>内側 false → i++</td></tr>
+        <tr><td>8</td><td>i=4</td><td>-</td><td>-</td><td>（なし）</td><td>外側 false で終了</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>1:1
+1:2
+3:1
+3:2</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>continue outerLoop;</code> は外側ループの次の反復へ進む（更新式 → 条件判定）。</li>
+      <li>内側ループは強制的に終了する点が、通常の continue との違い。</li>
+      <li>i==2 のときは内側を全部スキップして次の i=3 に進む。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

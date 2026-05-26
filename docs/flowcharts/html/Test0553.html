@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0553 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0553.md">元の Markdown: Test0553.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0553 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0553.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: ラベル付き <code>continue</code> / <code>break</code> による多重ループ制御。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 0;
+outer: for (int i = 0; i &lt; 10; i++) {
+    x++;
+    if (x &lt; 3) continue outer;
+    if (x + i &gt;= 8) break outer;
+
+    inner: for (int j = 0; j &lt; 10; j++) {
+        x++;
+        if (x + j &gt;= 5) break inner;
+    }
+}
+System.out.println(x);</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 0, i = 0&quot;]
+    B --&gt; C{&quot;i &lt; 10 ?&quot;}
+    C -- No --&gt; Y[&quot;print x&quot;]
+    Y --&gt; Z([終了])
+    C -- Yes --&gt; D[&quot;x++&quot;]
+    D --&gt; E{&quot;x &lt; 3 ?&quot;}
+    E -- Yes --&gt; K[&quot;continue outer → i++&quot;]
+    E -- No --&gt; F{&quot;x + i &gt;= 8 ?&quot;}
+    F -- Yes --&gt; Y
+    F -- No --&gt; G[&quot;j = 0&quot;]
+    G --&gt; H{&quot;j &lt; 10 ?&quot;}
+    H -- No --&gt; K
+    H -- Yes --&gt; I[&quot;x++&quot;]
+    I --&gt; J{&quot;x + j &gt;= 5 ?&quot;}
+    J -- Yes --&gt; K
+    J -- No --&gt; L[&quot;j++&quot;]
+    L --&gt; H
+    K --&gt; M[&quot;i++&quot;]
+    M --&gt; C</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>外 i</th><th>直後 x</th><th>x&lt;3?</th><th>x+i&gt;=8?</th><th>内 j</th><th>x（内側で増加）</th><th>x+j&gt;=5?</th><th>動作</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0</td><td>1</td><td>yes</td><td>-</td><td>-</td><td>-</td><td>-</td><td>continue outer</td></tr>
+        <tr><td>1</td><td>2</td><td>yes</td><td>-</td><td>-</td><td>-</td><td>-</td><td>continue outer</td></tr>
+        <tr><td>2</td><td>3</td><td>no</td><td>3+2=5, no</td><td>0</td><td>4</td><td>4+0=4, no</td><td>j++</td></tr>
+        <tr><td>2</td><td>-</td><td>-</td><td>-</td><td>1</td><td>5</td><td>5+1=6, yes</td><td>break inner</td></tr>
+        <tr><td>3</td><td>6</td><td>no</td><td>6+3=9, yes</td><td>-</td><td>-</td><td>-</td><td>break outer</td></tr>
+      </tbody>
+    </table>
+    <p>最終 x = 6。</p>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>6</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>continue outer</code> は外側ループの更新部（<code>i++</code>）に飛ぶ。内側ループは入らない（i=0,1 の時）。</li>
+      <li><code>break outer</code> は外側ループごと脱出する。</li>
+      <li>ラベル付き制御は多重ループの可読性を上げるが、乱用すると追いにくい。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

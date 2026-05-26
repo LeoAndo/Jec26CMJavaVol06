@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0516 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0516.md">元の Markdown: Test0516.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0516 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/Test0516.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: switch の <code>case</code> ラベルは重複させられないことを確認するコンパイルエラーのサンプル。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">short s = 0;
+switch (s) {
+    case 0:
+        System.out.print(&quot;A&quot;);
+        break;
+    case 1:
+        System.out.print(&quot;B&quot;);
+        break;
+    case 0: // Duplicate case
+        System.out.print(&quot;C&quot;);
+        break;
+    case -20:
+        System.out.print(&quot;D&quot;);
+        break;
+}</code></pre>
+    <h2 id="section-3">フローチャート（コンパイル成功した想定の論理フロー）</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;s = 0&quot;]
+    B --&gt; C{&quot;s の値&quot;}
+    C -- &quot;0 (最初の)&quot; --&gt; D[&quot;A を出力 → break&quot;]
+    C -- &quot;1&quot; --&gt; E[&quot;B を出力 → break&quot;]
+    C -- &quot;0 (重複)&quot; --&gt; F[&quot;C を出力 → break (到達不可)&quot;]
+    C -- &quot;-20&quot; --&gt; G[&quot;D を出力 → break&quot;]
+    D --&gt; Z([終了])
+    E --&gt; Z
+    F --&gt; Z
+    G --&gt; Z</pre>
+    <h2 id="section-4">トレース表（仮にコンパイルが通った場合の理屈）</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>s</th><th>マッチした case</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>short s = 0</code></td><td>0</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>switch (s)</code></td><td>0</td><td>最初の case 0 にジャンプ</td><td>-</td></tr>
+        <tr><td>3</td><td><code>case 0: print(&quot;A&quot;)</code></td><td>0</td><td>0</td><td>A</td></tr>
+        <tr><td>4</td><td><code>break</code></td><td>0</td><td>-</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <p>このコードはコンパイルエラーになる:</p>
+    <pre><code>Duplicate case</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>このファイルは<strong>コンパイルエラーを含む</strong>学習用サンプル。</li>
+      <li>switch 文で同じ値の <code>case</code> ラベルを 2 つ書くとコンパイルエラー。</li>
+      <li><code>short</code>/<code>byte</code>/<code>int</code>/<code>char</code>/<code>String</code>/<code>enum</code> が switch の式として使える。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

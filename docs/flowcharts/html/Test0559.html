@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0559 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0559.md">元の Markdown: Test0559.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0559 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0559.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: for 文の更新部と switch 内でループ変数を二重に変化させる例。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int a = 0;
+for (int x = 1; x &lt; 10; x++) {
+    switch (a % 3) {
+        case 0: x++; a++; break;
+        case 1: x += 2; a = a + 1; break;
+        case 2: x++; ++a; break;
+    }
+    System.out.print(x + &quot; &quot;);
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;a=0, x=1&quot;]
+    B --&gt; C{&quot;x &lt; 10 ?&quot;}
+    C -- No --&gt; Z([終了])
+    C -- Yes --&gt; D[&quot;switch(a % 3)&quot;]
+    D -- 0 --&gt; E[&quot;x++; a++; break&quot;]
+    D -- 1 --&gt; F[&quot;x+=2; a++; break&quot;]
+    D -- 2 --&gt; G[&quot;x++; a++; break&quot;]
+    E --&gt; H[&quot;print x&quot;]
+    F --&gt; H
+    G --&gt; H
+    H --&gt; I[&quot;x++ (for更新部)&quot;]
+    I --&gt; C</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>反復</th><th>開始 a</th><th>a%3</th><th>開始 x</th><th>switch後 x</th><th>switch後 a</th><th>print</th><th>更新後 x</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>2</td><td>1</td><td><code>2 </code></td><td>3</td></tr>
+        <tr><td>2</td><td>1</td><td>1</td><td>3</td><td>5</td><td>2</td><td><code>5 </code></td><td>6</td></tr>
+        <tr><td>3</td><td>2</td><td>2</td><td>6</td><td>7</td><td>3</td><td><code>7 </code></td><td>8</td></tr>
+        <tr><td>4</td><td>3</td><td>0</td><td>8</td><td>9</td><td>4</td><td><code>9 </code></td><td>10</td></tr>
+        <tr><td>5</td><td>4</td><td>-</td><td>10</td><td>-</td><td>-</td><td>x&lt;10 false → 終了</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>2 5 7 9 </code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>ループ変数 <code>x</code> を本体内でも変化させると、ループ進行が複雑になる。</li>
+      <li>1 反復あたり <code>x</code> は switch 内の増分と for 更新部 <code>x++</code> の両方で増える。</li>
+      <li><code>a</code> は毎回 1 ずつ増えるので <code>a % 3</code> は 0 → 1 → 2 → 0 と循環する。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

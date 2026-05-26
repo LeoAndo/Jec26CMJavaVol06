@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CalcCircle — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../CalcCircle.md">元の Markdown: CalcCircle.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">CalcCircle — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/CalcCircle.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: Scanner による標準入力と try-catch-finally による例外処理を学ぶサンプル。半径を入力させて円の面積を計算する。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">Scanner sc = new Scanner(System.in);
+try {
+    int hankei = sc.nextInt(); // キーボード入力した値をxに代入.
+    int area = (int) (hankei * hankei * 3.14);
+    System.out.println(&quot;円の半径を入力してください＞&quot; + hankei);
+    System.out.println(&quot;円の面積は&quot; + area + &quot;です&quot;);
+} catch (InputMismatchException ex) {
+    System.out.println(&quot;数値を入力してください&quot;);
+} finally {
+    sc.close();
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;Scanner sc = new Scanner(System.in)&quot;]
+    B --&gt; C[&quot;try ブロック開始&quot;]
+    C --&gt; D[&quot;hankei = sc.nextInt()&quot;]
+    D --&gt; E{&quot;数値を入力できたか&quot;}
+    E -- &quot;はい&quot; --&gt; F[&quot;area = (int)(hankei*hankei*3.14)&quot;]
+    F --&gt; G[&quot;半径を出力&quot;]
+    G --&gt; H[&quot;面積を出力&quot;]
+    H --&gt; J[&quot;finally: sc.close()&quot;]
+    E -- &quot;いいえ (InputMismatchException)&quot; --&gt; I[&quot;catch: 数値を入力してください を出力&quot;]
+    I --&gt; J
+    J --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <p>入力例: <code>3</code></p>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>hankei</th><th>area</th><th>入力</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>Scanner sc = new Scanner(System.in)</code></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>int hankei = sc.nextInt()</code></td><td>3</td><td>-</td><td>3</td><td>-</td></tr>
+        <tr><td>3</td><td><code>int area = (int)(hankei*hankei*3.14)</code></td><td>3</td><td>28</td><td>-</td><td>-</td></tr>
+        <tr><td>4</td><td><code>System.out.println(&quot;円の半径を入力してください＞&quot; + hankei)</code></td><td>3</td><td>28</td><td>-</td><td>円の半径を入力してください＞3</td></tr>
+        <tr><td>5</td><td><code>System.out.println(&quot;円の面積は&quot; + area + &quot;です&quot;)</code></td><td>3</td><td>28</td><td>-</td><td>円の面積は28です</td></tr>
+        <tr><td>6</td><td><code>sc.close()</code> (finally)</td><td>3</td><td>28</td><td>-</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <p>入力例: <code>3</code></p>
+    <pre><code>円の半径を入力してください＞3
+円の面積は28です</code></pre>
+    <p>入力例: <code>abc</code>（数値以外）</p>
+    <pre><code>数値を入力してください</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>Scanner</code> を使ったキーボード入力（<code>nextInt()</code>）。</li>
+      <li><code>try-catch-finally</code> による例外処理。<code>InputMismatchException</code> を捕捉して数値以外の入力に対応。</li>
+      <li><code>(int)</code> キャストで <code>double</code> の計算結果を <code>int</code> に丸める。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

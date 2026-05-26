@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleContinue03 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleContinue03.md">元の Markdown: SampleContinue03.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleContinue03 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/SampleContinue03.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: 二重 for ループ内の <code>continue</code>（内側ループの次の反復へ）。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">for (int i = 1; i &lt;= 3; i++) {
+    for (int j = 1; j &lt;= 5; j++) {
+        if (i == j) {
+            continue;       // 内側ループの次の j へ
+        }
+        System.out.println(i + &quot;:&quot; + j);
+    }
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 1&quot;]
+    B --&gt; C{&quot;i &lt;= 3 ?&quot;}
+    C -- Yes --&gt; D[&quot;j = 1&quot;]
+    D --&gt; E{&quot;j &lt;= 5 ?&quot;}
+    E -- Yes --&gt; F{&quot;i == j ?&quot;}
+    F -- Yes --&gt; J[&quot;continue → j++ へ&quot;]
+    F -- No --&gt; G[&quot;print i + : + j&quot;]
+    G --&gt; H[&quot;j++&quot;]
+    J --&gt; H
+    H --&gt; E
+    E -- No --&gt; I[&quot;i++&quot;]
+    I --&gt; C
+    C -- No --&gt; K([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>外側 i</th><th>内側 j</th><th>i==j</th><th>出力</th><th>コメント</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>1</td><td>1</td><td>true</td><td>（なし）</td><td><strong>continue で次の j へ</strong></td></tr>
+        <tr><td>2</td><td>1</td><td>2</td><td>false</td><td><code>1:2</code></td><td></td></tr>
+        <tr><td>3</td><td>1</td><td>3</td><td>false</td><td><code>1:3</code></td><td></td></tr>
+        <tr><td>4</td><td>1</td><td>4</td><td>false</td><td><code>1:4</code></td><td></td></tr>
+        <tr><td>5</td><td>1</td><td>5</td><td>false</td><td><code>1:5</code></td><td></td></tr>
+        <tr><td>6</td><td>2</td><td>1</td><td>false</td><td><code>2:1</code></td><td></td></tr>
+        <tr><td>7</td><td>2</td><td>2</td><td>true</td><td>（なし）</td><td><strong>continue で次の j へ</strong></td></tr>
+        <tr><td>8</td><td>2</td><td>3</td><td>false</td><td><code>2:3</code></td><td></td></tr>
+        <tr><td>9</td><td>2</td><td>4</td><td>false</td><td><code>2:4</code></td><td></td></tr>
+        <tr><td>10</td><td>2</td><td>5</td><td>false</td><td><code>2:5</code></td><td></td></tr>
+        <tr><td>11</td><td>3</td><td>1</td><td>false</td><td><code>3:1</code></td><td></td></tr>
+        <tr><td>12</td><td>3</td><td>2</td><td>false</td><td><code>3:2</code></td><td></td></tr>
+        <tr><td>13</td><td>3</td><td>3</td><td>true</td><td>（なし）</td><td><strong>continue で次の j へ</strong></td></tr>
+        <tr><td>14</td><td>3</td><td>4</td><td>false</td><td><code>3:4</code></td><td></td></tr>
+        <tr><td>15</td><td>3</td><td>5</td><td>false</td><td><code>3:5</code></td><td></td></tr>
+        <tr><td>16</td><td>i=4</td><td>-</td><td>-</td><td>（なし）</td><td>外側 false で終了</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>1:2
+1:3
+1:4
+1:5
+2:1
+2:3
+2:4
+2:5
+3:1
+3:2
+3:4
+3:5</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>二重ループの <code>continue</code> は <strong>最も内側のループの次の反復へ</strong> 進む。</li>
+      <li>外側ループには影響しない。</li>
+      <li><code>SampleBreak04</code> と比較すると、break と continue の違いがよく分かる。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

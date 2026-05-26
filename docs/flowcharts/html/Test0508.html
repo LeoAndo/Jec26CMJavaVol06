@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0508 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0508.md">元の Markdown: Test0508.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0508 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/Test0508.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: 前置インクリメント <code>++x</code> の評価順序を学ぶ。条件式で 1 増えた値が使われる。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 0;
+if (++x &gt; 0) {
+    System.out.print(&quot;A&quot;);
+} else {
+    System.out.print(&quot;B&quot;);
+}
+System.out.print(&quot;:&quot; + x);</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 0&quot;]
+    B --&gt; C[&quot;++x の評価: x=1 にしてから 1 を使う&quot;]
+    C --&gt; D{&quot;1 &gt; 0 ?&quot;}
+    D -- &quot;true&quot; --&gt; E[&quot;A を出力&quot;]
+    D -- &quot;false&quot; --&gt; F[&quot;B を出力&quot;]
+    E --&gt; G[&quot;:x を出力&quot;]
+    F --&gt; G
+    G --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>条件判定</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int x = 0</code></td><td>0</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>if (++x &gt; 0)</code> 評価</td><td>1（前置で先にインクリメント）</td><td><code>1 &gt; 0</code> → true</td><td>-</td></tr>
+        <tr><td>3</td><td><code>System.out.print(&quot;A&quot;)</code></td><td>1</td><td>-</td><td>A</td></tr>
+        <tr><td>4</td><td><code>System.out.print(&quot;:&quot; + x)</code></td><td>1</td><td>-</td><td>:1</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>A:1</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>前置 <code>++x</code> は「先に <code>x</code> を 1 増やしてから、その新しい値を式の値として使う」。</li>
+      <li><code>Test0507</code> との違いは、条件判定の時点で <code>x</code> が 1 か 0 か。</li>
+      <li>後置と前置で if の分岐結果が逆になることを確認する。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

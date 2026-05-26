@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0505 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0505.md">元の Markdown: Test0505.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0505 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/Test0505.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: <code>{}</code> を省略した if 文の動作確認。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 1;
+if (x &lt; 10)
+    System.out.print(&quot;A&quot;);
+System.out.print(&quot;B&quot;);</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 1&quot;]
+    B --&gt; C{&quot;x &lt; 10 ?&quot;}
+    C -- &quot;true&quot; --&gt; D[&quot;A を出力&quot;]
+    C -- &quot;false&quot; --&gt; E[&quot;B を出力&quot;]
+    D --&gt; E
+    E --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>条件判定</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int x = 1</code></td><td>1</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>if (x &lt; 10)</code></td><td>1</td><td><code>1 &lt; 10</code> → true</td><td>-</td></tr>
+        <tr><td>3</td><td><code>System.out.print(&quot;A&quot;)</code></td><td>1</td><td>-</td><td>A</td></tr>
+        <tr><td>4</td><td><code>System.out.print(&quot;B&quot;)</code></td><td>1</td><td>-</td><td>B</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>AB</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>{}</code> を省略した if 文は、直後の 1 文だけが本体。</li>
+      <li><code>System.out.print(&quot;B&quot;)</code> は if と無関係に常に実行される。</li>
+      <li>出力が改行されないので <code>AB</code> と連結される。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

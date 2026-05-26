@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0507 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0507.md">元の Markdown: Test0507.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0507 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/Test0507.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: 後置インクリメント <code>x++</code> の評価順序を学ぶ。条件式では古い値が使われ、後で 1 増える。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 0;
+if (x++ &gt; 0) {
+    System.out.print(&quot;A&quot;);
+} else {
+    System.out.print(&quot;B&quot;);
+}
+System.out.print(&quot;:&quot; + x);</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 0&quot;]
+    B --&gt; C[&quot;x++ の評価: 比較に 0 を使い、その後 x=1&quot;]
+    C --&gt; D{&quot;0 &gt; 0 ?&quot;}
+    D -- &quot;true&quot; --&gt; E[&quot;A を出力&quot;]
+    D -- &quot;false&quot; --&gt; F[&quot;B を出力&quot;]
+    E --&gt; G[&quot;:x を出力&quot;]
+    F --&gt; G
+    G --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>条件判定</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int x = 0</code></td><td>0</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>if (x++ &gt; 0)</code> 評価</td><td>0 → 1（後置で評価後にインクリメント）</td><td><code>0 &gt; 0</code> → false</td><td>-</td></tr>
+        <tr><td>3</td><td><code>else</code> 実行</td><td>1</td><td>-</td><td>-</td></tr>
+        <tr><td>4</td><td><code>System.out.print(&quot;B&quot;)</code></td><td>1</td><td>-</td><td>B</td></tr>
+        <tr><td>5</td><td><code>System.out.print(&quot;:&quot; + x)</code></td><td>1</td><td>-</td><td>:1</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>B:1</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>後置 <code>x++</code> は「式の値として古い <code>x</code> を使い、その後 <code>x</code> を 1 増やす」。</li>
+      <li>条件判定では古い値 <code>0</code> が使われるので <code>0 &gt; 0</code> で false。</li>
+      <li>比較後に x は 1 になっているので、最終出力で <code>:1</code> となる。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

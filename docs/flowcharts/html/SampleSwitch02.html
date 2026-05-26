@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleSwitch02 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleSwitch02.md">元の Markdown: SampleSwitch02.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleSwitch02 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/SampleSwitch02.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: <code>default</code> ラベルの動作。どの case にもマッチしないとき default が実行される。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 5;
+switch (x) {
+    case 1:
+        System.out.println(&quot;One&quot;);
+    case 2:
+        System.out.println(&quot;Two&quot;);
+    case 3:
+        System.out.println(&quot;Three&quot;);
+    default:
+        System.out.println(&quot;Others&quot;);
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 5&quot;]
+    B --&gt; C{&quot;x の値&quot;}
+    C -- &quot;1&quot; --&gt; D[&quot;One を出力&quot;]
+    C -- &quot;2&quot; --&gt; E[&quot;Two を出力&quot;]
+    C -- &quot;3&quot; --&gt; F[&quot;Three を出力&quot;]
+    C -- &quot;上記以外&quot; --&gt; G[&quot;Others を出力&quot;]
+    D --&gt; E
+    E --&gt; F
+    F --&gt; G
+    G --&gt; Z([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>マッチした case</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int x = 5</code></td><td>5</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>switch (x)</code></td><td>5</td><td>どの case にもマッチせず default にジャンプ</td><td>-</td></tr>
+        <tr><td>3</td><td><code>default: System.out.println(&quot;Others&quot;)</code></td><td>5</td><td>default</td><td>Others</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>Others</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>default</code> ラベルは「どの case にも一致しない場合」に実行される。</li>
+      <li><code>default</code> が最後にあって <code>break</code> がなくても、そのまま switch を抜ける。</li>
+      <li><code>default</code> は switch のどこに書いても動作するが、慣習的に末尾に置く。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

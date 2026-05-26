@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0521 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0521.md">元の Markdown: Test0521.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0521 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/Test0521.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: 複数の <code>case</code> ラベルに同じ処理を割り当てる書き方（case ラベルを連続させる）。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 7;
+switch (x % 3) {
+    case 1:
+    case 2:
+    case 3:
+        System.out.print(&quot;A&quot;);
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 7&quot;]
+    B --&gt; C[&quot;x % 3 = 1 を評価&quot;]
+    C --&gt; D{&quot;x%3 の値&quot;}
+    D -- &quot;1&quot; --&gt; E[&quot;A を出力&quot;]
+    D -- &quot;2&quot; --&gt; E
+    D -- &quot;3&quot; --&gt; E
+    D -- &quot;その他&quot; --&gt; Z([終了])
+    E --&gt; Z</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>x%3</th><th>マッチした case</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int x = 7</code></td><td>7</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>switch (x % 3)</code></td><td>7</td><td>1</td><td>case 1 にジャンプ</td><td>-</td></tr>
+        <tr><td>3</td><td><code>case 1:</code> (空) → fall through</td><td>7</td><td>1</td><td>1</td><td>-</td></tr>
+        <tr><td>4</td><td><code>case 2:</code> (空) → fall through</td><td>7</td><td>1</td><td>2</td><td>-</td></tr>
+        <tr><td>5</td><td><code>case 3: print(&quot;A&quot;)</code></td><td>7</td><td>1</td><td>3</td><td>A</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>A</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>連続する <code>case</code> ラベル（中身が空）を並べると、複数の値で同じ処理を共有できる。</li>
+      <li><code>7 % 3 = 1</code> で case 1 にマッチし、case 3 の処理まで fall-through して <code>A</code> を出力。</li>
+      <li>このパターンは「いずれかにマッチしたら同じ処理」を簡潔に書ける常用テクニック。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

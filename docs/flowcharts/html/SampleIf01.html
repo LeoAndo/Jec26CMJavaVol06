@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleIf01 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleIf01.md">元の Markdown: SampleIf01.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleIf01 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/SampleIf01.java</code></li>
+      <li>パッケージ: デフォルト</li>
+      <li>テーマ: 最も基本的な if 文。条件が true のときだけメッセージを出力する。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int x = 10;
+if (x &gt; 0) {
+    System.out.println(&quot;xは正です。&quot;);
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;x = 10&quot;]
+    B --&gt; C{&quot;x &gt; 0 ?&quot;}
+    C -- &quot;true&quot; --&gt; D[&quot;xは正です。 を出力&quot;]
+    C -- &quot;false&quot; --&gt; Z([終了])
+    D --&gt; Z</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>x</th><th>条件判定</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int x = 10</code></td><td>10</td><td>-</td><td>-</td></tr>
+        <tr><td>2</td><td><code>if (x &gt; 0)</code></td><td>10</td><td><code>10 &gt; 0</code> → true</td><td>-</td></tr>
+        <tr><td>3</td><td><code>System.out.println(&quot;xは正です。&quot;)</code></td><td>10</td><td>-</td><td>xは正です。</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>xは正です。</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li><code>if (条件) { 文; }</code> の最も基本的な形。</li>
+      <li>条件が true のときだけブロック内が実行される。</li>
+      <li>条件が false のとき、ブロックはまるごとスキップされる。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

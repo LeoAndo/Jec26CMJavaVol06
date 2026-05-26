@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test0549 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../Test0549.md">元の Markdown: Test0549.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">Test0549 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/Test0549.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: for 文の初期化部・条件部に複数式、<code>continue</code> で更新部だけ実行。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">for (int i = 0, j = 10; i &lt; 5 || j &gt; 5; i++) {
+    if (i % 2 == 0) {
+        j -= 2;
+        continue;
+    }
+    System.out.println(i + &quot;:&quot; + j);
+}</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 0, j = 10&quot;]
+    B --&gt; C{&quot;i &lt; 5 || j &gt; 5 ?&quot;}
+    C -- No --&gt; Z([終了])
+    C -- Yes --&gt; D{&quot;i % 2 == 0 ?&quot;}
+    D -- Yes --&gt; E[&quot;j -= 2&quot;]
+    E --&gt; F[&quot;continue (更新部へ)&quot;]
+    D -- No --&gt; G[&quot;print i + : + j&quot;]
+    G --&gt; H[&quot;i++&quot;]
+    F --&gt; H
+    H --&gt; C</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>i</th><th>j</th><th>条件 i&lt;5 \</th><th>\</th><th>j&gt;5</th><th>i%2==0?</th><th>動作</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>0</td><td>10</td><td>true</td><td>true</td><td>j=8, continue → i++</td><td>-</td></tr>
+        <tr><td>2</td><td>1</td><td>8</td><td>true</td><td>false</td><td>print, i++</td><td><code>1:8</code></td></tr>
+        <tr><td>3</td><td>2</td><td>8</td><td>true</td><td>true</td><td>j=6, continue → i++</td><td>-</td></tr>
+        <tr><td>4</td><td>3</td><td>6</td><td>true</td><td>false</td><td>print, i++</td><td><code>3:6</code></td></tr>
+        <tr><td>5</td><td>4</td><td>6</td><td>true</td><td>true</td><td>j=4, continue → i++</td><td>-</td></tr>
+        <tr><td>6</td><td>5</td><td>4</td><td>5&lt;5=false, 4&gt;5=false → false</td><td>-</td><td>ループ終了</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>1:8
+3:6</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>for の初期化部・更新部はカンマ区切りで複数式を書ける（<code>int i = 0, j = 10</code>）。</li>
+      <li><code>continue</code> は for の場合「更新部 → 条件判定」へ飛ぶ。<code>i++</code> は実行される。</li>
+      <li>条件式に <code>||</code> を使うと短絡評価。<code>i &lt; 5</code> が false でも <code>j &gt; 5</code> を評価する。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>フローチャート・トレース表 目次</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <span class="page-header__current">フローチャート目次</span>
+      <a class="page-header__source" href="../INDEX.md">元の Markdown: INDEX.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">フローチャート・トレース表 目次</h1>
+    <p><code>src/</code> 配下の各 Java ファイルに対応するフローチャート（Mermaid 形式）と処理トレース表を、本ディレクトリ配下に 1 ファイルずつ作成しています。</p>
+    <ul>
+      <li>対象ファイル数: 108 ファイル（<code>src/</code>直下 42 + <code>src/vol06_02/</code> 配下 66）</li>
+      <li>各ドキュメントの章構成:</li>
+    </ul>
+    <ol>
+      <li>対象ファイル・パッケージ・テーマ</li>
+      <li>ソースの要点</li>
+      <li>フローチャート（Mermaid <code>flowchart TD</code>）</li>
+      <li>トレース表</li>
+      <li>実行結果（標準出力）</li>
+      <li>学習ポイント</li>
+    </ol>
+    <blockquote>
+      <p><strong>注意</strong>: 教材の一部にはコンパイルエラーや文法ミスをあえて含むファイルがあります。該当ファイルの .md には「学習ポイント」欄にその旨を明示しています。</p>
+    </blockquote>
+    <hr>
+    <h2 id="section-2">1. 条件分岐・switch（src/ 直下）</h2>
+    <h3 id="section-3">Scanner と例外処理</h3>
+    <ul>
+      <li><a href="CalcCircle.html">CalcCircle</a> — Scanner で半径を読み、円の面積を計算するサンプル。</li>
+    </ul>
+    <h3 id="section-4">enum</h3>
+    <ul>
+      <li><a href="ColorEnum.html">ColorEnum</a> — enum の基本。</li>
+      <li><a href="ColorEnum2.html">ColorEnum2</a> — 値を持つ enum。</li>
+    </ul>
+    <h3 id="section-5">if 文サンプル</h3>
+    <ul>
+      <li><a href="SampleIf01.html">SampleIf01</a> — if の基本形。</li>
+      <li><a href="SampleIf02.html">SampleIf02</a> — if / else。</li>
+      <li><a href="SampleIf03.html">SampleIf03</a> — if / else if / else の多分岐。</li>
+    </ul>
+    <h3 id="section-6">if 文 確認コード（IfTest）</h3>
+    <ul>
+      <li><a href="IfTest11.html">IfTest11</a></li>
+      <li><a href="IfTest12.html">IfTest12</a></li>
+      <li><a href="IfTest13.html">IfTest13</a></li>
+      <li><a href="IfTest14.html">IfTest14</a></li>
+      <li><a href="IfTest15.html">IfTest15</a></li>
+      <li><a href="IfTest21.html">IfTest21</a></li>
+      <li><a href="IfTest22.html">IfTest22</a></li>
+      <li><a href="IfTest23.html">IfTest23</a></li>
+      <li><a href="IfTest31.html">IfTest31</a></li>
+      <li><a href="IfTest32.html">IfTest32</a></li>
+      <li><a href="IfTest33.html">IfTest33</a></li>
+    </ul>
+    <h3 id="section-7">三項演算子</h3>
+    <ul>
+      <li><a href="SampleConditional01.html">SampleConditional01</a> — 三項演算子の基本。</li>
+    </ul>
+    <h3 id="section-8">switch 文</h3>
+    <ul>
+      <li><a href="SampleSwitch01.html">SampleSwitch01</a> — switch の基本。</li>
+      <li><a href="SampleSwitch02.html">SampleSwitch02</a> — switch（複数パターン）。</li>
+      <li><a href="SampleSwitchBreak01_.html">SampleSwitchBreak01_</a> — break 省略時の fall-through 比較用。</li>
+      <li><a href="SampleSwitchBreak01.html">SampleSwitchBreak01</a> — break 有りの正しい例。</li>
+      <li><a href="SampleSwitchBreak02.html">SampleSwitchBreak02</a> — break と default。</li>
+      <li><a href="SampleSwitchWithEnum.html">SampleSwitchWithEnum</a> — enum を switch で扱う。</li>
+    </ul>
+    <h3 id="section-9">条件分岐の確認問題</h3>
+    <ul>
+      <li><a href="Test0501.html">Test0501</a></li>
+      <li><a href="Test0502.html">Test0502</a></li>
+      <li><a href="Test0503.html">Test0503</a></li>
+      <li><a href="Test0504.html">Test0504</a></li>
+      <li><a href="Test0505.html">Test0505</a></li>
+      <li><a href="Test0506.html">Test0506</a></li>
+      <li><a href="Test0507.html">Test0507</a></li>
+      <li><a href="Test0508.html">Test0508</a></li>
+      <li><a href="Test0509.html">Test0509</a></li>
+      <li><a href="Test0510.html">Test0510</a></li>
+      <li><a href="Test0511.html">Test0511</a></li>
+      <li><a href="Test0512.html">Test0512</a></li>
+      <li><a href="Test0513.html">Test0513</a></li>
+      <li><a href="Test0514.html">Test0514</a></li>
+      <li><a href="Test0515.html">Test0515</a></li>
+      <li><a href="Test0516.html">Test0516</a></li>
+      <li><a href="Test0517.html">Test0517</a></li>
+      <li><a href="Test0518.html">Test0518</a></li>
+      <li><a href="Test0519.html">Test0519</a></li>
+      <li><a href="Test0520.html">Test0520</a></li>
+      <li><a href="Test0521.html">Test0521</a></li>
+      <li><a href="Test0522.html">Test0522</a></li>
+    </ul>
+    <hr>
+    <h2 id="section-10">2. 繰り返し（src/vol06_02/）</h2>
+    <h3 id="section-11">while 文</h3>
+    <ul>
+      <li><a href="SampleWhile01a.html">SampleWhile01a</a> — while を使わず逐次記述した比較用。</li>
+      <li><a href="SampleWhile01b.html">SampleWhile01b</a> — SampleWhile01a を while で書き換えた版。</li>
+      <li><a href="SampleWhile02.html">SampleWhile02</a></li>
+      <li><a href="SampleWhile03.html">SampleWhile03</a></li>
+      <li><a href="SampleWhile04.html">SampleWhile04</a> — ※スコープエラーを含む教材。</li>
+    </ul>
+    <h3 id="section-12">do-while 文</h3>
+    <ul>
+      <li><a href="SampleDoWhile01.html">SampleDoWhile01</a></li>
+      <li><a href="SampleDoWhile02.html">SampleDoWhile02</a></li>
+    </ul>
+    <h3 id="section-13">for 文</h3>
+    <ul>
+      <li><a href="SampleFor01.html">SampleFor01</a></li>
+      <li><a href="SampleFor02.html">SampleFor02</a></li>
+      <li><a href="SampleFor03.html">SampleFor03</a> — 二重 for。</li>
+      <li><a href="SampleFor03a.html">SampleFor03a</a></li>
+      <li><a href="SampleFor03b.html">SampleFor03b</a></li>
+      <li><a href="SampleFor03c.html">SampleFor03c</a></li>
+      <li><a href="SampleFor03d.html">SampleFor03d</a></li>
+      <li><a href="SampleFor03e.html">SampleFor03e</a> — 無限ループ。</li>
+      <li><a href="SampleFor03f.html">SampleFor03f</a></li>
+      <li><a href="SampleFor03g.html">SampleFor03g</a> — 無限ループ。</li>
+    </ul>
+    <h3 id="section-14">break / continue / label</h3>
+    <ul>
+      <li><a href="SampleBreak01.html">SampleBreak01</a></li>
+      <li><a href="SampleBreak02.html">SampleBreak02</a></li>
+      <li><a href="SampleBreak03.html">SampleBreak03</a></li>
+      <li><a href="SampleBreak04.html">SampleBreak04</a></li>
+      <li><a href="SampleContinue01.html">SampleContinue01</a></li>
+      <li><a href="SampleContinue02.html">SampleContinue02</a></li>
+      <li><a href="SampleContinue03.html">SampleContinue03</a></li>
+      <li><a href="SampleLabel01.html">SampleLabel01</a></li>
+      <li><a href="SampleLabel02.html">SampleLabel02</a></li>
+      <li><a href="SampleLabel03.html">SampleLabel03</a></li>
+      <li><a href="SampleLabel04.html">SampleLabel04</a></li>
+    </ul>
+    <h3 id="section-15">繰り返しの確認問題</h3>
+    <ul>
+      <li><a href="Test0530.html">Test0530</a></li>
+      <li><a href="Test0531.html">Test0531</a></li>
+      <li><a href="Test0532.html">Test0532</a></li>
+      <li><a href="Test0533.html">Test0533</a></li>
+      <li><a href="Test0534.html">Test0534</a></li>
+      <li><a href="Test0535.html">Test0535</a></li>
+      <li><a href="Test0536.html">Test0536</a></li>
+      <li><a href="Test0537.html">Test0537</a></li>
+      <li><a href="Test0538.html">Test0538</a></li>
+      <li><a href="Test0539.html">Test0539</a></li>
+      <li><a href="Test0540.html">Test0540</a> — ※<code>while(1)</code> コンパイルエラーを含む。</li>
+      <li><a href="Test0541.html">Test0541</a></li>
+      <li><a href="Test0542.html">Test0542</a></li>
+      <li><a href="Test0543.html">Test0543</a></li>
+      <li><a href="Test0544.html">Test0544</a></li>
+      <li><a href="Test0545.html">Test0545</a></li>
+      <li><a href="Test0546.html">Test0546</a></li>
+      <li><a href="Test0547.html">Test0547</a> — ※コンパイルエラー含み。</li>
+      <li><a href="Test0548.html">Test0548</a> — ※コンパイルエラー含み。</li>
+      <li><a href="Test0549.html">Test0549</a></li>
+      <li><a href="Test0550.html">Test0550</a></li>
+      <li><a href="Test0551.html">Test0551</a> — 二重ループ。</li>
+      <li><a href="Test0552.html">Test0552</a> — 二重ループ。</li>
+      <li><a href="Test0553.html">Test0553</a> — 二重ループ。</li>
+      <li><a href="Test0554.html">Test0554</a> — ※コンパイルエラー含み。</li>
+      <li><a href="Test0555.html">Test0555</a></li>
+      <li><a href="Test0556.html">Test0556</a></li>
+      <li><a href="Test0557.html">Test0557</a></li>
+      <li><a href="Test0558.html">Test0558</a></li>
+      <li><a href="Test0559.html">Test0559</a></li>
+      <li><a href="Test0560.html">Test0560</a></li>
+      <li><a href="Test0561.html">Test0561</a> — 二重ループ。</li>
+      <li><a href="Test0562.html">Test0562</a> — <code>||</code> の短絡評価。</li>
+      <li><a href="Test0563.html">Test0563</a> — <code>&amp;&amp;</code> の短絡評価。</li>
+    </ul>
+    <hr>
+    <h2 id="section-16">図の表示について</h2>
+    <p>各 .md は GitHub・IntelliJ IDEA・VS Code の Markdown プレビューで Mermaid 図がそのまま描画されます。Mermaid を解釈しない環境では、コードブロックの定義文を読むことでフロー構造を把握できます。</p>
+    <p>HTML 版は <code>docs/flowcharts/html/index.html</code> から確認できます。 再生成する場合は、リポジトリ直下で次のコマンドを実行します。</p>
+    <pre><code class="language-bash">javac -encoding UTF-8 -d /tmp/flowchart-html-build tools/FlowchartHtmlGenerator.java
+java -cp /tmp/flowchart-html-build FlowchartHtmlGenerator</code></pre>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SampleDoWhile02 — フローチャートとトレース表</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- このファイルは tools/FlowchartHtmlGenerator.java で生成しています。 -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <a class="page-header__link" href="index.html">目次へ戻る</a>
+      <a class="page-header__source" href="../SampleDoWhile02.md">元の Markdown: SampleDoWhile02.md</a>
+    </div>
+  </header>
+  <main class="markdown-body">
+    <h1 id="section-1">SampleDoWhile02 — フローチャートとトレース表</h1>
+    <ul>
+      <li>対象ファイル: <code>src/vol06_02/SampleDoWhile02.java</code></li>
+      <li>パッケージ: <code>vol06_02</code></li>
+      <li>テーマ: do-while で「最初から条件 false」になる場合の挙動（1 回だけ実行される）。</li>
+    </ul>
+    <h2 id="section-2">ソースの要点</h2>
+    <pre><code class="language-java">int i = 10;
+do {
+    System.out.println(&quot;A&quot;);
+    i--;
+} while (i &lt; 5);</code></pre>
+    <h2 id="section-3">フローチャート</h2>
+    <pre class="mermaid">flowchart TD
+    A([開始]) --&gt; B[&quot;i = 10&quot;]
+    B --&gt; C[&quot;print A&quot;]
+    C --&gt; D[&quot;i--&quot;]
+    D --&gt; E{&quot;i &lt; 5 ?&quot;}
+    E -- Yes --&gt; C
+    E -- No --&gt; F([終了])</pre>
+    <h2 id="section-4">トレース表</h2>
+    <table>
+      <thead>
+        <tr><th>ステップ</th><th>文</th><th>実行前 i</th><th>実行後 i</th><th>条件 i&lt;5</th><th>出力</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><code>int i = 10;</code></td><td>-</td><td>10</td><td>-</td><td>（なし）</td></tr>
+        <tr><td>2</td><td><code>println(&quot;A&quot;)</code></td><td>10</td><td>10</td><td>-</td><td><code>A</code></td></tr>
+        <tr><td>3</td><td><code>i--</code></td><td>10</td><td>9</td><td>-</td><td>（なし）</td></tr>
+        <tr><td>4</td><td>条件判定</td><td>9</td><td>9</td><td>false</td><td>ループを抜ける</td></tr>
+      </tbody>
+    </table>
+    <h2 id="section-5">実行結果（標準出力）</h2>
+    <pre><code>A</code></pre>
+    <h2 id="section-6">学習ポイント</h2>
+    <ul>
+      <li>do-while は条件が最初から false でも、本体が必ず 1 回実行される。</li>
+      <li>while だった場合、条件 <code>10 &lt; 5</code> が false なので一度も実行されない。</li>
+      <li>「最低 1 回は処理したい」場合に do-while を使う。</li>
+    </ul>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+    }
+  </script>
+</body>
+</html>
